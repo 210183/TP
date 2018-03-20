@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Shop
+{
+    class Invoice
+    {
+        private string id;
+
+        public string Id { get => id; }
+        public DateTime PurchaseTime { get; }
+        public Client Client { get; set; }
+        public Product Product { get; set; }
+
+        public Invoice(Client client, Product product)
+        {
+            id = Guid.NewGuid().ToString();
+            PurchaseTime = DateTime.Now;
+            Product = product;
+            Client = client;
+        }
+    }
+}
