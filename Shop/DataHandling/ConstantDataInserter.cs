@@ -27,10 +27,16 @@ namespace Shop
                 "Cash"
             };
             var products = new Product[4];
+            var states = new ProductState[4];
             products[0] = new Product("Fender Stratocaster");
+            states[0] = new ProductState(products[0], 5, (decimal)2200, new Percentage(0.23));
             products[1] = new Product("Fender Telecaster");
+            states[1] = new ProductState(products[1], 2, (decimal)2101.12, new Percentage(0.23));
             products[2] = new Product("Jaydee SG");
+            states[2] = new ProductState(products[2], 1, (decimal)21321.42, new Percentage(0.23));
             products[3] = new Product("Gibson Les Paul Standard");
+            states[3] = new ProductState(products[3], 3, (decimal)11231.55, new Percentage(0.23));
+
             for (int i=0; i <names.Capacity; i++)
             {
                 context.Clients.Add(new Client(
@@ -38,7 +44,28 @@ namespace Shop
                     lastNames[i]
                     ));
             }
-            
+            for (int i = 0; i < products.Length; i++)
+            {
+                context.Products.Add(products[i].Id, products[i]);
+                context.ProductStates.Add(states[i]);
+            }
+            var clients = context.Clients;
+            context.Invoices.Add(new Invoice(
+                clients[0],
+                products[1]
+                ));
+            context.Invoices.Add(new Invoice(
+                clients[0],
+                products[2]
+                ));
+            context.Invoices.Add(new Invoice(
+                clients[1],
+                products[3]
+                ));
+            context.Invoices.Add(new Invoice(
+                clients[3],
+                products[4]
+                ));
             //var clientToAdd = new Client(
             //    "Buddy",
             //    "Guy");

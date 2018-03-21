@@ -4,8 +4,8 @@ namespace Shop
 {
     public class ReportData
     {
-        public DateTime LastCombinedReportDate { get; set; }
-        public DateTime LastChangeTime { get; set; }
+        public DateTime LastCombinedReportDate { get; set; } = DateTime.MinValue;
+        public DateTime LastChangeTime { get; set; } = DateTime.MinValue;
         public string LastCombinedReport { get; set; }
 
         public bool IsReportOutdated()

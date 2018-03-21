@@ -19,6 +19,10 @@ namespace Shop.Logging
             {
                 color = ConsoleColor.Yellow;
             }
+            else if (logLevel == LogLevel.BusinessLogic)
+            {
+                color = ConsoleColor.DarkBlue;
+            }
             Console.WriteLine(message, color);
         }
     }

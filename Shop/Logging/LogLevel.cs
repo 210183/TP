@@ -10,6 +10,7 @@ namespace Shop.Logging
     {
         Normal,
         Warning,
-        Critical
+        Critical,
+        BusinessLogic
     }
 }

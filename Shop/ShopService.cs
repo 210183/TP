@@ -40,9 +40,9 @@ namespace Shop
                             throw new NotEnoughProductException("Not enough product in stock.");
                         }
                     }
-                    catch(NotFoundException e)
+                    catch(NotFoundException)
                     {
-                        
+                        logger.Log("Couldn't find product state for given product. Stopped selling procedure.", LogLevel.Critical);
                     }
                 }
                 else

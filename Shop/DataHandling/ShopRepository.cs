@@ -89,6 +89,7 @@ namespace Shop
             if (context.Clients.Find(c => c.Id == client.Id) == null) // if no Client with given id
             {
                 context.Clients.Add(client);
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             else
             {
@@ -100,6 +101,7 @@ namespace Shop
             if (!context.Products.ContainsKey(product.Id)) // if no Product with given id
             {
                 context.Products.Add(product.Id, product);
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             else
             {
@@ -113,13 +115,17 @@ namespace Shop
             {
                 context.Clients.Add(invoice.Client);
             }
-            context.Invoices.Add(invoice);
+            {
+                context.Invoices.Add(invoice);
+                context.ReportData.LastChangeTime = DateTime.Now;
+            }
         }
         public void Add(ProductState productState)
         {
             if (context.ProductStates.Where(p => p.Product.Id == productState.Product.Id).FirstOrDefault() == null) // if no ProductState describing the same product
             {
                 context.ProductStates.Add(productState);
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             else
             {
@@ -133,6 +139,7 @@ namespace Shop
             if (context.Clients.Contains(client) ) 
             {
                 context.Clients.Remove(client);
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             else
             {
@@ -144,6 +151,7 @@ namespace Shop
             if (!context.Products.ContainsKey(product.Id)) 
             {
                 context.Products.Remove(product.Id);
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             else
             {
@@ -155,6 +163,7 @@ namespace Shop
             if (context.Invoices.Contains(invoice))
             {
                 context.Invoices.Remove(invoice);
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             else
             {
@@ -166,6 +175,7 @@ namespace Shop
             if ( context.ProductStates.Contains(productState) ) 
             {
                 context.ProductStates.Remove(productState);
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             else
             {
@@ -173,8 +183,6 @@ namespace Shop
             }
         }
         #endregion
-
-
 
         public void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

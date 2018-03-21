@@ -29,7 +29,10 @@ namespace Shop
         {
             Value = percents;
         }
-
+        public Percentage(double percents) : this()
+        {
+            Value = (decimal)percents;
+        }
         public override string ToString()
         {
             return $"{Value*100}%";
