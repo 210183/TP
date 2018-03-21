@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop;
+using Shop.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,20 @@ namespace Shop.Tests
     [TestClass()]
     public class ShopRepositoryTests
     {
+        private ShopRepository repo;
+        private ShopContext context;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            ConsoleLogger logger = new ConsoleLogger();
+            context = new ShopContext();
+            ConstantDataInserter dataInserter = new ConstantDataInserter();
+            dataInserter.InitializeContextWithData(context);
+            repo = new ShopRepository(context, dataInserter, logger);
+
+        }
+
         /*
         [TestMethod()]
         public void GetAllClientsTest()
@@ -39,7 +54,13 @@ namespace Shop.Tests
         [TestMethod()]
         public void GetClientTest()
         {
-            Assert.Fail();
+            string clientName = "Buddy";
+
+            var client = context.Clients.Find(c => c.FirstName == clientName);
+            var newClient = repo.GetClient(client.Id);
+
+            Assert.AreEqual(newClient.FirstName, clientName);
+
         }
 
         [TestMethod()]
