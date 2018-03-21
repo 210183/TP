@@ -11,10 +11,16 @@ namespace Shop.Tests
     [TestClass()]
     public class ProductTests
     {
+        private readonly string productName = "Fender";
+
         [TestMethod()]
         public void ProductTest()
         {
-            Assert.Fail();
+            Product product = new Product(productName);
+
+            Assert.AreEqual(product.Name, productName);
+            Assert.IsNotNull(product.Id);
+
         }
 
     }

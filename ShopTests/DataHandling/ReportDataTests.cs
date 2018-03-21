@@ -11,16 +11,33 @@ namespace Shop.Tests
     [TestClass()]
     public class ReportDataTests
     {
-        [TestMethod()]
-        public void IsReportOutdatedTest()
+        ReportData reportData;
+
+        [TestInitialize()]
+        public void Initialize()
         {
-            Assert.Fail();
+            DateTime lastChangeTime = DateTime.Now;
+            DateTime lastCombinedReportDate = DateTime.Now;
+
+            reportData = new ReportData
+            {
+                LastChangeTime = lastChangeTime,
+                LastCombinedReportDate = lastCombinedReportDate
+            };
+
         }
 
         [TestMethod()]
-        public void UpdateReportDateTest()
+        public void ReportDataTest()
         {
-            Assert.Fail();
+            Assert.IsFalse(reportData.IsReportOutdated());
+
+            reportData.LastChangeTime = DateTime.Now;
+            Assert.IsTrue(reportData.IsReportOutdated());
+
+            reportData.UpdateReportDate();
+            Assert.IsFalse(reportData.IsReportOutdated());
+
         }
 
     }
