@@ -1,6 +1,7 @@
 ﻿using Shop.DataHandling;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,6 +98,11 @@ namespace Shop
         }
         public void Add(Invoice invoice)
         {
+            var isClientUnknown = ! context.Clients.Contains(invoice.Client);
+            if (isClientUnknown)
+            {
+                context.Clients.Add(invoice.Client);
+            }
             context.Invoices.Add(invoice);
         }
         public void Add(ProductState productState)
@@ -157,5 +163,17 @@ namespace Shop
             }
         }
         #endregion
+        /// <summary>
+        /// Reduces product amount in "magazine" with given value
+        /// </summary>
+        /// <param name="amountChange">How many product was sold</param>
+        public void ReduceProductstateAmount(Product product, int amountChange)
+        {
+            try
+            {
+                var productState = GetProductState(product);
+            }
+        }
+
     }
 }
