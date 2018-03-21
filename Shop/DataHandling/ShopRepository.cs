@@ -44,15 +44,16 @@ namespace Shop
         }
         public Product GetProduct(string id)
         {
-            var product = context.Products[id];
-            if (product is null)
+            try
+            {
+                var product = context.Products[id];
+                return product;
+            }
+            catch(KeyNotFoundException)
             {
                 throw new NotFoundException("Product not found");
             }
-            else
-            {
-                return product;
-            }
+           
         }
         public Invoice GetInvoice(string id)
         {
@@ -148,7 +149,7 @@ namespace Shop
         }
         public void Delete(Product product)
         {
-            if (!context.Products.ContainsKey(product.Id)) 
+            if (context.Products.ContainsKey(product.Id)) 
             {
                 context.Products.Remove(product.Id);
                 context.ReportData.LastChangeTime = DateTime.Now;
@@ -198,7 +199,7 @@ namespace Shop
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 StringBuilder itemsMessageBuilder = new StringBuilder();
-                foreach (var item in e.NewItems)
+                foreach (var item in e.OldItems)
                 {
                     itemsMessageBuilder.Append(item.ToString() + " ");
                 }

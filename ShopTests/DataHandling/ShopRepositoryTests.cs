@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop;
+using Shop.DataHandling;
 using Shop.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,14 @@ namespace Shop.Tests
     {
         private ShopRepository repo;
         private ShopContext context;
+        private Client client;
+        private Product product;
+        private Invoice invoice;
+        private ProductState productState;
+
+        private int amount = 2;
+        private decimal priceNetto = 2;
+        private Percentage taxRate;
 
         [TestInitialize()]
         public void Initialize()
@@ -23,7 +32,12 @@ namespace Shop.Tests
             ConstantDataInserter dataInserter = new ConstantDataInserter();
             dataInserter.InitializeContextWithData(context);
             repo = new ShopRepository(context, dataInserter, logger);
+            taxRate = new Percentage(0.2);
 
+            client = new Client("John", "Doe");
+            product = new Product("Chicken");
+            invoice = new Invoice(client, product);
+            productState = new ProductState(product, amount, priceNetto, taxRate);
         }
 
         /*
@@ -60,79 +74,233 @@ namespace Shop.Tests
             var newClient = repo.GetClient(client.Id);
 
             Assert.AreEqual(newClient.FirstName, clientName);
-
         }
 
         [TestMethod()]
         public void GetProductTest()
         {
-            Assert.Fail();
+            Product product = context.Products.First().Value;
+            Product newProduct = repo.GetProduct(product.Id);
+
+            Assert.AreEqual(product.Name, newProduct.Name);
+
         }
 
         [TestMethod()]
         public void GetInvoiceTest()
         {
-            Assert.Fail();
+            Invoice invoice = context.Invoices.First();
+            Invoice newInvoice = repo.GetInvoice(invoice.Id);
+
+
+            Assert.AreEqual(invoice.PurchaseTime, newInvoice.PurchaseTime );
         }
 
         [TestMethod()]
         public void GetProductStateTest()
         {
+            ProductState productState = context.ProductStates.First();
+            ProductState newProductState = repo.GetProductState(productState.Product);
+            Assert.AreEqual(productState.Product, newProductState.Product );
+        }
+
+        [TestMethod()]
+        public void AddClientTest()
+        {
+            
+            repo.Add(client);
+            Assert.AreEqual(client.FirstName, repo.GetClient(client.Id).FirstName);
+            try
+            {
+                repo.Add(client);
+            }
+            catch(DuplicateException)
+            {
+                Assert.IsTrue(true);
+                return;
+            }
             Assert.Fail();
         }
 
         [TestMethod()]
-        public void GetReportDataTest()
+        public void AddProductTest()
         {
+            repo.Add(product);
+            Assert.AreEqual(product.Name, repo.GetProduct(product.Id).Name);
+            try
+            {
+                repo.Add(product);
+            }
+            catch (DuplicateException)
+            {
+                Assert.IsTrue(true);
+                return;
+            }
             Assert.Fail();
         }
 
         [TestMethod()]
-        public void AddTest()
+        public void AddInvoiceTest()
         {
+            repo.Add(invoice);
+            Assert.AreEqual(invoice.Product, repo.GetInvoice(invoice.Id).Product);
+           
+        }
+
+        [TestMethod()]
+        public void AddProductStateTest()
+        {
+            repo.Add(productState);
+            Assert.AreEqual(productState.Amount, repo.GetProductState(product).Amount);
+            try
+            {
+                repo.Add(productState);
+            }
+            catch (DuplicateException)
+            {
+                Assert.IsTrue(true);
+                return;
+            }
             Assert.Fail();
         }
 
         [TestMethod()]
-        public void AddTest1()
+        public void DeleteClientTest()
         {
-            Assert.Fail();
+            repo.Add(client);
+            repo.Delete(client);
+
+            int passedCounter = 0;
+
+            try
+            {
+                repo.GetClient(client.Id);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
+            try
+            {
+                repo.Delete(client);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
+            if(passedCounter==2)
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.Fail();
+            }
         }
 
         [TestMethod()]
-        public void AddTest2()
+        public void DeleteProductTest()
         {
-            Assert.Fail();
+            repo.Add(product);
+            repo.Delete(product);
+
+            int passedCounter = 0;
+
+            try
+            {
+                repo.GetProduct(product.Id);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
+            try
+            {
+                repo.Delete(product);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
+           
+            if (passedCounter == 2)
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.Fail();
+            }
         }
 
         [TestMethod()]
-        public void AddTest3()
-        {
-            Assert.Fail();
+        public void DeleteProductStateTest()
+        {  
+            repo.Add(productState);
+            repo.Delete(productState);
+
+            int passedCounter = 0;
+
+            try
+            {
+                repo.GetProductState(product);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
+            try
+            {
+                repo.Delete(productState);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
+
+            if (passedCounter == 2)
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.Fail();
+            }
         }
 
         [TestMethod()]
-        public void DeleteTest()
+        public void DeleteInvoiceTest()
         {
-            Assert.Fail();
-        }
+            repo.Add(invoice);
+            repo.Delete(invoice);
 
-        [TestMethod()]
-        public void DeleteTest1()
-        {
-            Assert.Fail();
-        }
+            int passedCounter = 0;
 
-        [TestMethod()]
-        public void DeleteTest2()
-        {
-            Assert.Fail();
-        }
+            try
+            {
+                repo.GetInvoice(invoice.Id);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
+            try
+            {
+                repo.Delete(invoice);
+            }
+            catch (NotFoundException)
+            {
+                passedCounter++;
+            }
 
-        [TestMethod()]
-        public void DeleteTest3()
-        {
-            Assert.Fail();
+            if (passedCounter == 2)
+            {
+                Assert.IsTrue(true);
+            }
+            else
+            {
+                Assert.Fail();
+            }
         }
 
         /*

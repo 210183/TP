@@ -12,12 +12,14 @@ namespace Shop.Tests
     public class ReportDataTests
     {
         ReportData reportData;
+        DateTime lastCombinedReportDate;
 
-        [TestInitialize()]
+       [TestInitialize()]
         public void Initialize()
         {
             DateTime lastChangeTime = DateTime.Now;
-            DateTime lastCombinedReportDate = DateTime.Now;
+            lastCombinedReportDate = DateTime.Now;
+            lastCombinedReportDate = lastCombinedReportDate.AddMinutes(1);
 
             reportData = new ReportData
             {
@@ -32,9 +34,10 @@ namespace Shop.Tests
         {
             Assert.IsFalse(reportData.IsReportOutdated());
 
-            reportData.LastChangeTime = DateTime.Now;
+            reportData.LastChangeTime = reportData.LastChangeTime.AddMinutes(2);
             Assert.IsTrue(reportData.IsReportOutdated());
 
+            reportData.LastChangeTime = reportData.LastChangeTime.AddMinutes(-2);
             reportData.UpdateReportDate();
             Assert.IsFalse(reportData.IsReportOutdated());
 

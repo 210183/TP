@@ -10,7 +10,7 @@ namespace Shop
 
         public bool IsReportOutdated()
         {
-            return LastCombinedReportDate < LastChangeTime;
+            return LastCombinedReportDate <= LastChangeTime;
         }
         public void UpdateReportDate()
         {

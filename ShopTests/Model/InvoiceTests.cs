@@ -19,10 +19,11 @@ namespace Shop.Tests
         public void InvoiceConstructor_Test()
         {
             DateTime testTime = DateTime.Now;
+            
 
             Invoice invoice = new Invoice(new Client(clientFirstName, clientLastName), new Product(productName));
 
-            Assert.IsTrue(testTime < invoice.PurchaseTime);
+            Assert.IsTrue(testTime <= invoice.PurchaseTime);
             Assert.IsTrue(testTime.AddSeconds(1) > invoice.PurchaseTime);
             Assert.IsNotNull(invoice.Id);
             Assert.IsNotNull(invoice.Client);
