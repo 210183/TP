@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-    class ShopRepository
+    public class ShopRepository
     {
         private ShopContext context;
         private ILogger logger;

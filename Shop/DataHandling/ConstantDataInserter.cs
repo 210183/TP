@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-    class ConstantDataInserter : IDataInserter
+    public class ConstantDataInserter : IDataInserter
     {
         public void InitializeContextWithData(ShopContext context)
         {

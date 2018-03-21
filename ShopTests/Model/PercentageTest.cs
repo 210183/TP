@@ -10,7 +10,7 @@ namespace ShopTests
     public class PercentageTest
     {
         [TestMethod]
-        public void Set_Test()
+        public void Percentage_SetTest()
         {
             try
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-    class Invoice
+    public class Invoice
     {
         private string id;
 

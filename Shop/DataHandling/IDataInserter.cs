@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-    interface IDataInserter
+    public interface IDataInserter
     {
         void InitializeContextWithData(ShopContext context);
     }
