@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-    class ProductState
+    public class ProductState
     {
         public Product Product { get; } // what that would mean if you could change product described by that state ?
         public int Amount { get; set; }

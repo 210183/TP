@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Logging
 {
-    enum LogLevel
+    public enum LogLevel
     {
         Normal,
         Warning,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Logging
 {
-    interface ILogger
+    public interface ILogger
     {
         void Log(string message, LogLevel logLevel = LogLevel.Normal);
     }

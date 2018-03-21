@@ -25,5 +25,7 @@ namespace Shop.Tests
             Console.WriteLine(client.Id);
 #endif
         }
+
+
     }
 }

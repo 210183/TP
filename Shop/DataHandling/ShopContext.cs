@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-    class ShopContext
+    public class ShopContext
     {
         public List<Client> Clients { get; set; }
         public Dictionary<string, Product> Products { get; set; }

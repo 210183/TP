@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
-    class ShopService
+    public class ShopService
     {
         private ShopRepository repository;
         private ILogger logger;

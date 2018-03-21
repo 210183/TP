@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.DataHandling
 {
-    class DuplicateException : ArgumentException
+    public class DuplicateException : ArgumentException
     {
         public DuplicateException(string message) : base(message)
         {

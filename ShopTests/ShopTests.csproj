@@ -60,8 +60,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ClientTests.cs" />
-    <Compile Include="PercentageTest.cs" />
+    <Compile Include="Model\ClientTests.cs" />
+    <Compile Include="DataHandling\ReportDataTests.cs" />
+    <Compile Include="DataHandling\ShopRepositoryTests.cs" />
+    <Compile Include="Model\InvoiceTests.cs" />
+    <Compile Include="Model\ProductStateTests.cs" />
+    <Compile Include="Model\ProductTests.cs" />
+    <Compile Include="Model\PercentageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
