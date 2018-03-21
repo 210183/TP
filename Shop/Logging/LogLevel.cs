@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Shop.Logging
 {
-    interface ILogger
+    enum LogLevel
     {
-        void Log(string message, LogLevel logLevel = LogLevel.Normal);
+        Normal,
+        Warning,
+        Critical
     }
 }

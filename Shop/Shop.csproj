@@ -40,19 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
+    <Compile Include="DataHandling\ReportData.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Model\Client.cs" />
     <Compile Include="DataHandling\ConstantDataInserter.cs" />
     <Compile Include="Exceptions\DuplicateException.cs" />
     <Compile Include="DataHandling\IDataInserter.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\PercentageException.cs" />
-    <Compile Include="Invoice.cs" />
+    <Compile Include="Model\Invoice.cs" />
     <Compile Include="Exceptions\NotEnoughProductException.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Percentage.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="ProductState.cs" />
+    <Compile Include="Model\Percentage.cs" />
+    <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\ProductState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataHandling\ShopContext.cs" />
     <Compile Include="DataHandling\ShopRepository.cs" />

@@ -13,5 +13,7 @@ namespace Shop
         public Dictionary<string, Product> Products { get; set; }
         public ObservableCollection<Invoice> Invoices { get; set; }
         public ObservableCollection<ProductState> ProductStates { get; set; }
+
+        public ReportData ReportData { get; set; }
     }
 }

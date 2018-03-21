@@ -78,6 +78,10 @@ namespace Shop
                 return productState;
             }
         }
+        public ReportData GetReportData()
+        {
+            return context.ReportData;
+        }
         #endregion
         #region Add
         public void Add(Client client)
@@ -169,6 +173,9 @@ namespace Shop
             }
         }
         #endregion
+
+
+
         public void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
