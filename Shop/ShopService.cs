@@ -16,7 +16,7 @@ namespace Shop
             this.repository = repository;
         }
 
-        public void SellProduct(Client client, Product product)
+        public void SellProduct(Client client, Product product, int amountToSell)
         {
             if (client != null)
             {
@@ -26,14 +26,21 @@ namespace Shop
                     try
                     {
                         //update state
-
-                        repository.Add(invoice);
+                        var productState = repository.GetProductState(product);
+                        if(productState.Amount >= amountToSell)
+                        {
+                            productState.Amount -= amountToSell;
+                            repository.Add(invoice);
+                        }
+                        else
+                        {
+                            throw new NotEnoughProductException("Not enough product in stock.");
+                        }
                     }
                     catch(NotFoundException e)
                     {
 
                     }
-
                 }
                 else
                 {

@@ -1,4 +1,5 @@
 ﻿using Shop.DataHandling;
+using Shop.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -11,11 +12,16 @@ namespace Shop
     class ShopRepository
     {
         private ShopContext context;
-
-        public ShopRepository (ShopContext context, IDataInserter inserter)
+        private ILogger logger;
+        public ShopRepository (ShopContext context, IDataInserter inserter, ILogger logger)
         {
             this.context = context;
             inserter.InitializeContextWithData(context);
+            this.logger = logger;
+            #region Adding logging when collections are changed
+            context.Invoices.CollectionChanged += CollectionChanged;
+            context.ProductStates.CollectionChanged += CollectionChanged;
+            #endregion
         }
         #region GetAll
         public ICollection<Client> GetAllClients() => context.Clients.ToList();
@@ -163,17 +169,26 @@ namespace Shop
             }
         }
         #endregion
-        /// <summary>
-        /// Reduces product amount in "magazine" with given value
-        /// </summary>
-        /// <param name="amountChange">How many product was sold</param>
-        public void ReduceProductstateAmount(Product product, int amountChange)
+        public void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            try
+            if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                var productState = GetProductState(product);
+                StringBuilder itemsMessageBuilder = new StringBuilder();
+                foreach(var item in e.NewItems)
+                {
+                    itemsMessageBuilder.Append(item.ToString() + " ");
+                }
+                logger.Log($"Added {itemsMessageBuilder} to {sender.ToString()}");
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                StringBuilder itemsMessageBuilder = new StringBuilder();
+                foreach (var item in e.NewItems)
+                {
+                    itemsMessageBuilder.Append(item.ToString() + " ");
+                }
+                logger.Log($"Removed {itemsMessageBuilder} from {sender.ToString()}");
             }
         }
-
     }
 }

@@ -22,5 +22,10 @@ namespace Shop
             Product = product;
             Client = client;
         }
+
+        public override string ToString()
+        {
+            return $"Date {PurchaseTime.ToString()} /nBuyer: {Client.ToString()} \nProduct: {Product.ToString()}";
+        }
     }
 }

@@ -19,5 +19,10 @@ namespace Shop
             PriceNetto = priceNetto;
             TaxRate = taxRate;
         }
+
+        public override string ToString()
+        {
+            return $"Product: {Product.ToString()} Amount: {Amount} Price: {PriceNetto} TaxRate: {TaxRate.ToString()}";
+        }
     }
 }

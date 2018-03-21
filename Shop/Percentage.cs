@@ -29,5 +29,10 @@ namespace Shop
         {
             Value = percents;
         }
+
+        public override string ToString()
+        {
+            return $"{Value*100}%";
+        }
     }
 }

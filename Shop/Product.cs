@@ -18,5 +18,10 @@ namespace Shop
             id = Guid.NewGuid().ToString();
             Name = name;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

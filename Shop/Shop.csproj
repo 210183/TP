@@ -47,6 +47,9 @@
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\PercentageException.cs" />
     <Compile Include="Invoice.cs" />
+    <Compile Include="Exceptions\NotEnoughProductException.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Percentage.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductState.cs" />
