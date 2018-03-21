@@ -18,6 +18,25 @@ namespace Shop
             this.logger = logger;
         }
 
+        #region GetAll
+        public ICollection<Client> GetAllClients()
+        {
+            return repository.GetAllClients();
+        }
+        public ICollection<Product> GetAllProducts()
+        {
+            return repository.GetAllProducts();
+        }
+        public ICollection<ProductState> GetAllProductStates()
+        {
+            return repository.GetAllProductStates();
+        }
+        public ICollection<Invoice> GetAllInvoices()
+        {
+            return repository.GetAllInvoices();
+        }
+        #endregion
+
         public void SellProduct(Client client, Product product, int amountToSell)
         {
             if (client != null)
@@ -70,28 +89,28 @@ namespace Shop
             color = ConsoleColor.DarkCyan;
             foreach(var item in repository.GetAllClients())
             {
-                WriteLine(item.ToString());
+                WriteLine(item.ToString() + "\n");
             }
             color = ConsoleColor.Yellow;
             WriteLine("\n_P_R_O_D_U_C_T_S");
             color = ConsoleColor.DarkYellow;
             foreach (var item in repository.GetAllProducts())
             {
-                WriteLine(item.ToString());
+                WriteLine(item.ToString() + "\n");
             }
             color = ConsoleColor.Green;
             WriteLine("\n_P_R_O_D_U_C_T_S_-_S_T_A_T_E_S_");
             color = ConsoleColor.DarkGreen;
             foreach (var item in repository.GetAllProductStates())
             {
-                WriteLine(item.ToString());
+                WriteLine(item.ToString() + "\n");
             }
             color = ConsoleColor.Magenta;
             WriteLine("\n_I_N_V_O_I_C_E_S");
             color = ConsoleColor.DarkMagenta;
             foreach (var item in repository.GetAllInvoices())
             {
-                WriteLine(item.ToString());
+                WriteLine(item.ToString() + "\n");
             }
         }
         public void ConsoleShowCombined()
