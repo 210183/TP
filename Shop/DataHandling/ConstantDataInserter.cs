@@ -37,7 +37,7 @@ namespace Shop
             products[3] = new Product("Gibson Les Paul Standard");
             states[3] = new ProductState(products[3], 3, (decimal)11231.55, new Percentage(0.23));
 
-            for (int i=0; i <names.Capacity; i++)
+            for (int i=0; i <names.Count; i++)
             {
                 context.Clients.Add(new Client(
                     names[i],
@@ -64,7 +64,7 @@ namespace Shop
                 ));
             context.Invoices.Add(new Invoice(
                 clients[3],
-                products[4]
+                products[3]
                 ));
             //var clientToAdd = new Client(
             //    "Buddy",

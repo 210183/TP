@@ -25,7 +25,7 @@ namespace Shop
 
         public override string ToString()
         {
-            return $"Date {PurchaseTime.ToString()} /nBuyer: {Client.ToString()} \nProduct: {Product.ToString()}";
+            return $"Date {PurchaseTime.ToString()} \nBuyer: {Client.ToString()} \nProduct: {Product.ToString()}";
         }
     }
 }

@@ -58,11 +58,16 @@ namespace Shop
 
         public void ConsoleShowAll()
         {
-            var color = ConsoleColor.Blue;
-            void WriteLine(string msg) => Console.WriteLine(msg, color);
+            var color = ConsoleColor.Cyan;
+            void WriteLine(string msg) {
+                var oldColor = Console.ForegroundColor;
+                Console.ForegroundColor = color;
+                Console.WriteLine(msg);
+                Console.ForegroundColor = oldColor;
+            };
 
             WriteLine("\n_C_L_I_E_N_T_S");
-            color = ConsoleColor.DarkBlue;
+            color = ConsoleColor.DarkCyan;
             foreach(var item in repository.GetAllClients())
             {
                 WriteLine(item.ToString());

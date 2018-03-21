@@ -9,11 +9,11 @@ namespace Shop
 {
     public class ShopContext
     {
-        public List<Client> Clients { get; set; }
-        public Dictionary<string, Product> Products { get; set; }
-        public ObservableCollection<Invoice> Invoices { get; set; }
-        public ObservableCollection<ProductState> ProductStates { get; set; }
+        public List<Client> Clients { get; set; } = new List<Client>();
+        public Dictionary<string, Product> Products { get; set; } = new Dictionary<string, Product>();
+        public ObservableCollection<Invoice> Invoices { get; set; } = new ObservableCollection<Invoice>();
+        public ObservableCollection<ProductState> ProductStates { get; set; } = new ObservableCollection<ProductState>();
 
-        public ReportData ReportData { get; set; }
+        public ReportData ReportData { get; set; } = new ReportData();
     }
 }
