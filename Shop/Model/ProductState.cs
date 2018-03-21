@@ -22,7 +22,7 @@ namespace Shop
 
         public override string ToString()
         {
-            return $"Product: {Product.ToString()} Amount: {Amount} Price: {PriceNetto} TaxRate: {TaxRate.ToString()}";
+            return $"Product: {Product.ToString()} \n>>Amount: {Amount} \n>>Price: {PriceNetto} \n>>TaxRate: {TaxRate.ToString()}";
         }
     }
 }

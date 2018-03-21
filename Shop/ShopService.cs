@@ -36,6 +36,21 @@ namespace Shop
             return repository.GetAllInvoices();
         }
         #endregion
+        #region Delete
+        public void Delete(Client client)
+        {
+            repository.Delete(client);
+        }
+        public void Delete(Product product)
+        {
+            repository.Delete(repository.GetProductState(product));
+            repository.Delete(product);
+        }
+        public void Delete(Invoice invoice)
+        {
+            repository.Delete(invoice);
+        }
+        #endregion
 
         public void SellProduct(Client client, Product product, int amountToSell)
         {
@@ -118,22 +133,22 @@ namespace Shop
             StringBuilder messageBuilder = new StringBuilder();
             foreach(var client in repository.GetAllClients())
             {
-                messageBuilder.Append($"\nClient: {client.ToString()}");
+                messageBuilder.Append($"\n\n\n\nClient: {client.ToString()}");
                 var invoices = repository.GetAllInvoices().Where(i => i.Client.Id == client.Id);
                 int ordinalNumber = 0;
                 foreach (var invoice in invoices)
                 {
                     ordinalNumber++;
-                    messageBuilder.Append($"\n--Invoice {ordinalNumber}: {invoice.ToString()}");
-                    messageBuilder.Append($"\n-----Product: {invoice.Product.ToString()}");
+                    messageBuilder.Append($"\n\n_I_N_V_O_I_C_E {ordinalNumber}: \n{invoice.ToString()}");
+                    messageBuilder.Append($"\nProduct: \n{invoice.Product.ToString()}");
                     try
                     {
                         var productState = repository.GetProductState(invoice.Product);
-                        messageBuilder.Append($"\n-----State: {productState.ToString()}");
+                        messageBuilder.Append($"\n-----State-----: \n{productState.ToString()}");
                     }
                     catch(NotFoundException)
                     {
-                        messageBuilder.Append($"\n-----State is unknown");
+                        messageBuilder.Append($"\n-----State is unknown-----");
                     }
                 }
             }
