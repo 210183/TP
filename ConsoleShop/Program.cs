@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shop;
+using Shop.DataHandling;
 using Shop.Logging;
 
 namespace ConsoleShop
@@ -16,7 +17,7 @@ namespace ConsoleShop
         {
             var logger = new ConsoleLogger();
             var context = new ShopContext();
-            var dataInserter = new ConstantDataInserter();
+            var dataInserter = new RandomDataInserter();
             var repo = new ShopRepository(context, dataInserter, logger);
             var service = new ShopService(repo, logger);
 

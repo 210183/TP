@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHandling\RandomDataInserter.cs" />
     <Compile Include="DataHandling\ReportData.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Model\Client.cs" />
@@ -59,6 +60,13 @@
     <Compile Include="DataHandling\ShopContext.cs" />
     <Compile Include="DataHandling\ShopRepository.cs" />
     <Compile Include="ShopService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\first-names.txt" />
+    <EmbeddedResource Include="Resources\last-names.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\products.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
