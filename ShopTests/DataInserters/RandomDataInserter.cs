@@ -111,7 +111,7 @@ namespace Shop.Tests
                 {
                     currentBuyer = clients[randomizer.Next() % clients.Count];
                     currentProduct = RandomValues(products).Take(1).First();
-                    context.Invoices.Add( new Invoice(
+                    context.Invoices.Add(new Invoice(
                         currentBuyer,
                         currentProduct,
                         randomizer.Next() % 10,
