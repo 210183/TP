@@ -10,21 +10,17 @@ namespace ShopTests
     public class PercentageTest
     {
         [TestMethod]
-        public void Percentage_SetTest()
+        [ExpectedException(typeof(PercentageException))]
+        public void Percentage_ConstructorWithTooLowValue_Test()
         {
-            try
-            {
-                Set_BadValue_ShouldThrow_Test((decimal)100.1);
-                Set_BadValue_ShouldThrow_Test((decimal)-0.1);
-            }
-            catch (PercentageException) { }
+            Percentage percent = new Percentage(-0.1);
         }
 
-        //[TestMethod]
+        [TestMethod]
         [ExpectedException(typeof(PercentageException))]
-        public void Set_BadValue_ShouldThrow_Test(decimal value)
+        public void Percentage_ConstructorWithTooHighValue_Test()
         {
-            Percentage percent = new Percentage(value);
+            Percentage percent = new Percentage(100.1);
         }
     }
 }

@@ -33,8 +33,8 @@ namespace Shop.Tests
             ConstantDataInserter dataInserter = new ConstantDataInserter();
             dataInserter.InitializeContextWithData(context);
             repo = new ShopRepository(context, logger);
+        
             taxRate = new Percentage(20);
-
             client = new Client("John", "Doe");
             product = new Product("Chicken");
             invoice = new Invoice(client, product, 1, (decimal)123.123, new Percentage(21));

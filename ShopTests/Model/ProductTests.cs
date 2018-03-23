@@ -20,7 +20,6 @@ namespace Shop.Tests
 
             Assert.AreEqual(product.Name, productName);
             Assert.IsNotNull(product.Id);
-
         }
 
     }

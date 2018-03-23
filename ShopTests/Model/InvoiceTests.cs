@@ -20,7 +20,6 @@ namespace Shop.Tests
         {
             DateTime testTime = DateTime.Now;
             
-
             Invoice invoice = new Invoice(
                 new Client(clientFirstName,clientLastName), 
                 new Product(productName),

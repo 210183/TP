@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
+    /// <summary>
+    /// Responsible for apllication business logic by providing SellProduct method and
+    /// exposing chosen repository managing methods.
+    /// Logs some of events using ILogger.
+    /// </summary>
     public class ShopService
     {
         private ShopRepository repository;
@@ -36,6 +41,7 @@ namespace Shop
             return repository.GetAllInvoices();
         }
         #endregion
+
         #region Delete
         public void Delete(Client client)
         {
@@ -76,7 +82,7 @@ namespace Shop
                     }
                     catch(NotFoundException)
                     {
-                        logger.Log("Couldn't find product state for given product. Stopped selling procedure.", LogLevel.Critical);
+                        logger.Log($"Couldn't find product state for {product.Id}, {product.Name}. Stopped selling procedure.", LogLevel.Critical);
                     }
                 }
                 else

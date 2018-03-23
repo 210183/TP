@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
+    /// <summary>
+    /// Repository manages data for shop apllication.
+    /// Uses injected ILogger for logging data context changes.
+    /// </summary>
     public class ShopRepository
     {
         private ShopContext context;
@@ -18,17 +22,19 @@ namespace Shop
         {
             this.context = context;
             this.logger = logger;
-            #region Adding logging when collections are changed
+            #region Add logging when collections are changed
             context.Invoices.CollectionChanged += CollectionChanged;
             context.ProductStates.CollectionChanged += CollectionChanged;
             #endregion
         }
+
         #region GetAll
         public ICollection<Client> GetAllClients() => context.Clients.ToList();
         public ICollection<Product> GetAllProducts() => context.Products.Values.ToList();
         public ICollection<ProductState> GetAllProductStates() => context.ProductStates.ToList();
         public ICollection<Invoice> GetAllInvoices() => context.Invoices.ToList();
         #endregion
+
         #region Get
         public Client GetClient(string id)
         {
@@ -84,6 +90,7 @@ namespace Shop
             return context.ReportData;
         }
         #endregion
+
         #region Add
         public void Add(Client client)
         {
@@ -134,6 +141,7 @@ namespace Shop
             }
         }
         #endregion
+
         #region Delete
         public void Delete(Client client)
         {
@@ -184,6 +192,7 @@ namespace Shop
             }
         }
         #endregion
+
         #region Update
         public void Update(Client client, ClientData clientData)
         {
@@ -242,7 +251,12 @@ namespace Shop
         }
         #endregion
 
-        public void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        /// <summary>
+        /// Creates message about changes and calls ILogger.Log() to log message.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {

@@ -42,6 +42,5 @@ namespace Shop.Tests
             Assert.IsFalse(reportData.IsReportOutdated());
 
         }
-
     }
 }

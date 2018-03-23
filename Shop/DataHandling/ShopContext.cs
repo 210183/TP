@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
+    /// <summary>
+    /// Represents data context for application.
+    /// Consists of collections: clients, products, products states, invoices.
+    /// Also holds report data for last generated context report.
+    /// </summary>
     public class ShopContext
     {
         public List<Client> Clients { get; set; } = new List<Client>();

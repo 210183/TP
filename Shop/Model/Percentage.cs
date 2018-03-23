@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Shop
 {
+    /// <summary>
+    /// Represents percentage values to separate them from other numerics.
+    /// 
+    /// </summary>
     public struct Percentage : IEquatable<Percentage>
     {
         private decimal value;
@@ -38,6 +42,10 @@ namespace Shop
             Value = percents;
         }
 
+        /// <summary>
+        /// Returns value%. E.g. "73%"
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"{Value}%";

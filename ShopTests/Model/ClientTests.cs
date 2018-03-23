@@ -21,9 +21,6 @@ namespace Shop.Tests
             Assert.AreEqual(client.FirstName, clientFirstName);
             Assert.AreEqual(client.LastName, clientLastName);
             Assert.IsNotNull(client.Id);
-#if Debug
-            Console.WriteLine(client.Id);
-#endif
         }
 
 
