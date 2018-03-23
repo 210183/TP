@@ -41,7 +41,7 @@ namespace Shop.Tests
             productState = new ProductState(product, amount, priceNetto, taxRate);
         }
 
-        
+        #region GetAll
         [TestMethod()]
         public void GetAllClientsTest()
         {
@@ -65,16 +65,16 @@ namespace Shop.Tests
         {
             Assert.AreEqual(context.Invoices.Count, repo.GetAllInvoices().Count);
         }
-        
+        #endregion
+        #region Get
         [TestMethod()]
         public void GetClientTest()
         {
-            string clientName = "Buddy";
-
-            var client = context.Clients.Find(c => c.FirstName == clientName);
+            
+            var client = context.Clients.First(); 
             var newClient = repo.GetClient(client.Id);
 
-            Assert.AreEqual(newClient.FirstName, clientName);
+            Assert.AreEqual(newClient.FirstName, client.FirstName);
         }
 
         [TestMethod()]
@@ -104,7 +104,8 @@ namespace Shop.Tests
             ProductState newProductState = repo.GetProductState(productState.Product);
             Assert.AreEqual(productState.Product, newProductState.Product);
         }
-
+        #endregion
+        #region Add
         [TestMethod()]
         [ExpectedException(typeof(DuplicateException))]
         public void AddClientTest()
@@ -138,7 +139,8 @@ namespace Shop.Tests
             Assert.AreEqual(productState.Amount, repo.GetProductState(product).Amount);
             repo.Add(productState);
         }
-
+        #endregion
+        #region Delete
         [TestMethod()]
         [ExpectedException(typeof(NotFoundException))]
         public void DeleteClient_ShouldDeleteFromRepo_Test()
@@ -206,14 +208,15 @@ namespace Shop.Tests
             var newInvoice = new Invoice(client, product, 1, (decimal)123.123, new Percentage(21));
             repo.Delete(newInvoice);
         }
-
+        #endregion
+        #region Update
         [TestMethod()]
           public void UpdateClientTest()
         {
             ClientData clientData = new ClientData { LastName = "Kazakov" };
-            Assert.IsTrue(clientData.LastName != client.LastName);
+            Assert.AreNotEqual(clientData.LastName, client.LastName);
             repo.Update(client, clientData);
-            Assert.IsTrue(clientData.LastName == client.LastName);
+            Assert.AreEqual(clientData.LastName, client.LastName);
             Assert.IsFalse(clientData.IsFirstNameChanged);
 
         }
@@ -222,20 +225,20 @@ namespace Shop.Tests
         public void UpdateProductTest()
         {
             var productData = new ProductData { Name = "Banana" };
-            Assert.IsTrue(productData.Name != product.Name);
+            Assert.AreNotEqual(productData.Name, product.Name);
             repo.Update(product, productData);
-            Assert.IsTrue(productData.Name == product.Name);
+            Assert.AreEqual(productData.Name, product.Name);
         }
 
         [TestMethod()]
         public void UpdateProductStateTest()
         {
             var productStateData = new ProductStateData { Amount = 15, PriceNetto = 10 };
-            Assert.IsTrue(productStateData.Amount != productState.Amount);
-            Assert.IsTrue(productStateData.PriceNetto != productState.PriceNetto);
-           repo.Update(productState, productStateData);
-            Assert.IsTrue(productStateData.Amount == productState.Amount);
-            Assert.IsTrue(productStateData.PriceNetto == productState.PriceNetto);
+            Assert.AreNotEqual(productStateData.Amount, productState.Amount);
+            Assert.AreNotEqual(productStateData.PriceNetto, productState.PriceNetto);
+            repo.Update(productState, productStateData);
+            Assert.AreEqual(productStateData.Amount, productState.Amount);
+            Assert.AreEqual(productStateData.PriceNetto, productState.PriceNetto);
             Assert.IsFalse(productStateData.IsTaxRateChanged);
         }
 
@@ -243,19 +246,14 @@ namespace Shop.Tests
         public void UpdateInvoiceTest()
         {
             var invoiceData = new InvoiceData { Amount = 15, TaxRate = new Percentage(10) };
-            Assert.IsTrue(invoiceData.Amount != invoice.Amount);
-            Assert.IsTrue(invoiceData.TaxRate!= invoice.TaxRate);
+            Assert.AreNotEqual(invoiceData.Amount, invoice.Amount);
+            Assert.AreNotEqual(invoiceData.TaxRate, invoice.TaxRate);
             repo.Update(invoice, invoiceData);
-            Assert.IsTrue(invoiceData.Amount == invoice.Amount);
-            Assert.IsTrue(invoiceData.TaxRate == invoice.TaxRate);
+            Assert.AreEqual(invoiceData.Amount, invoice.Amount);
+            Assert.AreEqual(invoiceData.TaxRate, invoice.TaxRate);
             Assert.IsFalse(invoiceData.IsPriceChanged);
         }
-        /*
-[TestMethod()]
-public void CollectionChangedTest()
-{
-   Assert.Fail();
-}
-*/
+        #endregion
+       
     }
 }
