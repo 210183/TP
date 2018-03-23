@@ -41,31 +41,31 @@ namespace Shop.Tests
             productState = new ProductState(product, amount, priceNetto, taxRate);
         }
 
-        /*
+        
         [TestMethod()]
         public void GetAllClientsTest()
         {
-            Assert.Fail();
+            Assert.AreEqual(context.Clients.Count, repo.GetAllClients().Count);
         }
 
         [TestMethod()]
         public void GetAllProductsTest()
         {
-            Assert.Fail();
+            Assert.AreEqual(context.Products.Count, repo.GetAllProducts().Count);
         }
 
         [TestMethod()]
         public void GetAllProductStatesTest()
         {
-            Assert.Fail();
+            Assert.AreEqual(context.ProductStates.Count, repo.GetAllProductStates().Count);
         }
 
         [TestMethod()]
         public void GetAllInvoicesTest()
         {
-            Assert.Fail();
+            Assert.AreEqual(context.Invoices.Count, repo.GetAllInvoices().Count);
         }
-        */
+        
         [TestMethod()]
         public void GetClientTest()
         {
