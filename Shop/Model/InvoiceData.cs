@@ -8,13 +8,18 @@ namespace Shop.Model
 {
     public class InvoiceData
     {
-        public DateTime PurchaseTime {get => PurchaseTime; set { PurchaseTime = value; IsPurchaseTimeChanged = true;} }
+        private DateTime purchaseTime;
+        private int amount;
+        private decimal price;
+        private Percentage taxRate;
+
+        public DateTime PurchaseTime {get => purchaseTime; set { purchaseTime = value; IsPurchaseTimeChanged = true;} }
         public bool IsPurchaseTimeChanged { get; set; } = false;
-        public int Amount { get => Amount; set { Amount = value; IsAmountChanged = true; } }
+        public int Amount { get => amount; set { amount = value; IsAmountChanged = true; } }
         public bool IsAmountChanged { get; set; } = false;
-        public decimal Price { get => Price; set { Price = value; IsPriceChanged = true; } }
+        public decimal Price { get => price; set { price = value; IsPriceChanged = true; } }
         public bool IsPriceChanged { get; set; } = false;
-        public Percentage TaxRate { get => TaxRate; set { TaxRate = value; IsTaxRateChanged = true; } }
+        public Percentage TaxRate { get => taxRate; set { taxRate = value; IsTaxRateChanged = true; } }
         public bool IsTaxRateChanged { get; set; } = false;
     }
 }
