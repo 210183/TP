@@ -49,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ShopTests\ShopTests.csproj">
+      <Project>{9e830934-27ab-42a8-b824-5c6c35d7b092}</Project>
+      <Name>ShopTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shop\Shop.csproj">
       <Project>{344f726d-b11f-4d1c-be2a-7063d2067c15}</Project>
       <Name>Shop</Name>

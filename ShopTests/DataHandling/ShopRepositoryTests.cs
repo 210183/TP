@@ -36,7 +36,7 @@ namespace Shop.Tests
 
             client = new Client("John", "Doe");
             product = new Product("Chicken");
-            invoice = new Invoice(client, product);
+            invoice = new Invoice(client, product, 1, (decimal)123.123, new Percentage(21));
             productState = new ProductState(product, amount, priceNetto, taxRate);
         }
 
@@ -202,7 +202,7 @@ namespace Shop.Tests
         [ExpectedException(typeof(NotFoundException))]
         public void DeleteInvoiceNotInRepo_Test()
         {
-            var newInvoice = new Invoice(client, product);
+            var newInvoice = new Invoice(client, product, 1, (decimal)123.123, new Percentage(21));
             repo.Delete(newInvoice);
         }
         /*

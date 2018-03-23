@@ -52,19 +52,31 @@ namespace Shop.Tests
             var clients = context.Clients;
             context.Invoices.Add(new Invoice(
                 clients[0],
-                products[1]
+                products[1],
+                1, 
+                (decimal)123.123, 
+                new Percentage(21)
                 ));
             context.Invoices.Add(new Invoice(
                 clients[0],
-                products[2]
+                products[2],
+                1,
+                (decimal)123.123,
+                new Percentage(21)
                 ));
             context.Invoices.Add(new Invoice(
                 clients[1],
-                products[3]
+                products[3],
+                1,
+                (decimal)123.123,
+                new Percentage(21)
                 ));
             context.Invoices.Add(new Invoice(
                 clients[3],
-                products[3]
+                products[3],
+                1,
+                (decimal)123.123,
+                new Percentage(21)
                 ));
             //var clientToAdd = new Client(
             //    "Buddy",

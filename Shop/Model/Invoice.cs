@@ -34,5 +34,6 @@ namespace Shop
             return $"--Date {PurchaseTime.ToString()} \n--Buyer: {Client.ToString()} \n--Product: {Product.ToString()}" +
                     $" \n--Amount: {Amount.ToString()} \n--Netto Price: {Price.ToString()} \n--Tax Rate: {TaxRate.ToString()} ";
         }
+
     }
 }
