@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="DataInserters\ConstantDataInserter.cs" />
     <Compile Include="DataInserters\IDataInserter.cs" />
+    <Compile Include="MockLogger.cs" />
     <Compile Include="Model\ClientTests.cs" />
     <Compile Include="DataHandling\ReportDataTests.cs" />
     <Compile Include="DataHandling\ShopRepositoryTests.cs" />
@@ -80,6 +81,15 @@
       <Project>{344F726D-B11F-4D1C-BE2A-7063D2067C15}</Project>
       <Name>Shop</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\first-names.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\last-names.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\products.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

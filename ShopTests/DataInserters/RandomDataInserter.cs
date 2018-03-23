@@ -51,6 +51,7 @@ namespace Shop.Tests
                 }
             }
             #endregion
+            #region generate products
             var products = new Product[productAmount];
             var productsSourceName = FormatResourceName(assembly, "Resources/products.txt");
             string productsSequence;
@@ -71,6 +72,9 @@ namespace Shop.Tests
                     );
                 context.Products.Add(products[i].Id, products[i]);
             }
+            #endregion
+
+
         }
         private static string FormatResourceName(Assembly assembly, string resourceName)
         {

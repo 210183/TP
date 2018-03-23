@@ -17,7 +17,7 @@ namespace ShopTests
                 Set_BadValue_ShouldThrow_Test((decimal)1.1);
                 Set_BadValue_ShouldThrow_Test((decimal)-0.1);
             }
-            catch (PercentageException e) { }
+            catch (PercentageException) { }
         }
 
         //[TestMethod]

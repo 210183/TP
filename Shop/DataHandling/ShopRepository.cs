@@ -129,7 +129,7 @@ namespace Shop
             }
             else
             {
-                throw new DuplicateException("Cannot add productState  describing the same product.");
+                throw new DuplicateException("Cannot add productState describing the same product.");
             }
         }
         #endregion
