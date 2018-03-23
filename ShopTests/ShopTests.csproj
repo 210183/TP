@@ -73,6 +73,7 @@
     <Compile Include="PerformanceTests\ShopPerformanceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataInserters\RandomDataInserter.cs" />
+    <Compile Include="ShopServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

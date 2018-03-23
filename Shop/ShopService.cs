@@ -58,6 +58,18 @@ namespace Shop
         }
         #endregion
 
+        public List<Product> FindProductsWithPriceBetween(decimal lowerBound, decimal upperBound)
+        {
+            var productStates = repository.GetAllProductStates().Where(p =>
+            p.PriceNetto >= lowerBound && p.PriceNetto <= upperBound);
+            var products = new List<Product>();
+            foreach(var p in productStates)
+            {
+                products.Add(p.Product);
+            }
+            return products;
+        }
+
         public void SellProduct(Client client, Product product, int amountToSell)
         {
             if (client != null)

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Shop.Tests
 {
+    /// <summary>
+    /// Inserts few consisten objects of different kinds to context.
+    /// That class implementation should not be changed without proper consideration
+    /// of changes impact on tests.
+    /// </summary>
     public class ConstantDataInserter : IDataInserter
     {
         public void InitializeContextWithData(ShopContext context)
@@ -26,8 +31,8 @@ namespace Shop.Tests
                 "Gers",
                 "Cash"
             };
-            var products = new Product[4];
-            var states = new ProductState[4];
+            var products = new Product[5];
+            var states = new ProductState[5];
             products[0] = new Product("Fender Stratocaster");
             states[0] = new ProductState(products[0], 5, (decimal)2200, new Percentage(23));
             products[1] = new Product("Fender Telecaster");
@@ -36,6 +41,8 @@ namespace Shop.Tests
             states[2] = new ProductState(products[2], 1, (decimal)21321.42, new Percentage(23));
             products[3] = new Product("Gibson Les Paul Standard");
             states[3] = new ProductState(products[3], 3, (decimal)11231.55, new Percentage(23));
+            products[4] = new Product("Gibson SD Troyes");
+            states[4] = new ProductState(products[4], 3, (decimal)15231.55, new Percentage(23));
 
             for (int i=0; i <names.Count; i++)
             {
