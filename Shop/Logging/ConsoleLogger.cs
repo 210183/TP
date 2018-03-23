@@ -24,6 +24,7 @@ namespace Shop.Logging
                 color = ConsoleColor.DarkBlue;
             }
             Console.WriteLine(message, color);
+            Console.Read();
         }
     }
 }

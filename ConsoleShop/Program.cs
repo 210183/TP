@@ -17,8 +17,7 @@ namespace ConsoleShop
         {
             var logger = new ConsoleLogger();
             var context = new ShopContext();
-            var dataInserter = new RandomDataInserter();
-            var repo = new ShopRepository(context, dataInserter, logger);
+            var repo = new ShopRepository(context, logger);
             var service = new ShopService(repo, logger);
 
             #region loop vars

@@ -40,13 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataHandling\RandomDataInserter.cs" />
     <Compile Include="DataHandling\ReportData.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Model\Client.cs" />
-    <Compile Include="DataHandling\ConstantDataInserter.cs" />
     <Compile Include="Exceptions\DuplicateException.cs" />
-    <Compile Include="DataHandling\IDataInserter.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\PercentageException.cs" />
     <Compile Include="Model\Invoice.cs" />

@@ -13,10 +13,9 @@ namespace Shop
     {
         private ShopContext context;
         private ILogger logger;
-        public ShopRepository (ShopContext context, IDataInserter inserter, ILogger logger)
+        public ShopRepository (ShopContext context, ILogger logger)
         {
             this.context = context;
-            inserter.InitializeContextWithData(context);
             this.logger = logger;
             #region Adding logging when collections are changed
             context.Invoices.CollectionChanged += CollectionChanged;

@@ -31,7 +31,7 @@ namespace Shop.Tests
             context = new ShopContext();
             ConstantDataInserter dataInserter = new ConstantDataInserter();
             dataInserter.InitializeContextWithData(context);
-            repo = new ShopRepository(context, dataInserter, logger);
+            repo = new ShopRepository(context, logger);
             taxRate = new Percentage(0.2);
 
             client = new Client("John", "Doe");
@@ -105,38 +105,21 @@ namespace Shop.Tests
         }
 
         [TestMethod()]
+        [ExpectedException(typeof(DuplicateException))]
         public void AddClientTest()
-        {
-            
+        {    
             repo.Add(client);
             Assert.AreEqual(client.FirstName, repo.GetClient(client.Id).FirstName);
-            try
-            {
-                repo.Add(client);
-            }
-            catch(DuplicateException)
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            repo.Add(client);
         }
 
         [TestMethod()]
+        [ExpectedException(typeof(DuplicateException))]
         public void AddProductTest()
         {
             repo.Add(product);
             Assert.AreEqual(product.Name, repo.GetProduct(product.Id).Name);
-            try
-            {
-                repo.Add(product);
-            }
-            catch (DuplicateException)
-            {
-                Assert.IsTrue(true);
-                return;
-            }
-            Assert.Fail();
+            repo.Add(product);
         }
 
         [TestMethod()]
