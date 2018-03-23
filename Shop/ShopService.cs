@@ -65,7 +65,7 @@ namespace Shop
                         if(productState.Amount >= amountToSell)
                         {
                             productState.Amount -= amountToSell;
-                            var invoice = new Invoice(client, product);
+                            var invoice = new Invoice(client, product, amountToSell, productState.PriceNetto, productState.TaxRate);
                             repository.Add(invoice);
                             logger.Log($"New purchase has been made with invoice: {invoice.ToString()}");
                         }
