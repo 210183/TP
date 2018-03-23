@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace Shop.Model
 {
-    class InvoiceData
+    public class InvoiceData
     {
-        public DateTime PurchaseTime { get; set; }      
-        public int Amount { get; set; }
-        public decimal Price { get; set; }
-        public Percentage TaxRate { get; set; }
+        public DateTime PurchaseTime {get => PurchaseTime; set { PurchaseTime = value; IsPurchaseTimeChanged = true;} }
+        public bool IsPurchaseTimeChanged { get; set; } = false;
+        public int Amount { get => Amount; set { Amount = value; IsAmountChanged = true; } }
+        public bool IsAmountChanged { get; set; } = false;
+        public decimal Price { get => Price; set { Price = value; IsPriceChanged = true; } }
+        public bool IsPriceChanged { get; set; } = false;
+        public Percentage TaxRate { get => TaxRate; set { TaxRate = value; IsTaxRateChanged = true; } }
+        public bool IsTaxRateChanged { get; set; } = false;
     }
 }
