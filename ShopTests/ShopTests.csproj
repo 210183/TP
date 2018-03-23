@@ -70,6 +70,7 @@
     <Compile Include="Model\ProductStateTests.cs" />
     <Compile Include="Model\ProductTests.cs" />
     <Compile Include="Model\PercentageTest.cs" />
+    <Compile Include="PerformanceTests\ShopPerformanceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataInserters\RandomDataInserter.cs" />
   </ItemGroup>

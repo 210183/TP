@@ -33,11 +33,11 @@ namespace Shop.Tests
             ConstantDataInserter dataInserter = new ConstantDataInserter();
             dataInserter.InitializeContextWithData(context);
             repo = new ShopRepository(context, logger);
-            taxRate = new Percentage(0.2);
+            taxRate = new Percentage(20);
 
             client = new Client("John", "Doe");
             product = new Product("Chicken");
-            invoice = new Invoice(client, product);
+            invoice = new Invoice(client, product, 1, (decimal)123.123, new Percentage(21));
             productState = new ProductState(product, amount, priceNetto, taxRate);
         }
 
@@ -186,7 +186,7 @@ namespace Shop.Tests
         [ExpectedException(typeof(NotFoundException))]
         public void DeleteProductStateNotInRepo_Test()
         {
-            var newProductState = new ProductState(product, 31, 141, new Percentage(0.21));
+            var newProductState = new ProductState(product, 31, 141, new Percentage(21));
             repo.Delete(newProductState);
         }
 
@@ -203,7 +203,7 @@ namespace Shop.Tests
         [ExpectedException(typeof(NotFoundException))]
         public void DeleteInvoiceNotInRepo_Test()
         {
-            var newInvoice = new Invoice(client, product);
+            var newInvoice = new Invoice(client, product, 1, (decimal)123.123, new Percentage(21));
             repo.Delete(newInvoice);
         }
 

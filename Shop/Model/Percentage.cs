@@ -16,7 +16,7 @@ namespace Shop
             get => value;
             set
             {
-                if (value >= 0 && value <= 1)
+                if (value >= 0 && value <= 100)
                 {
                     this.value = value;
                 }
@@ -33,10 +33,14 @@ namespace Shop
         {
             Value = (decimal)percents;
         }
+        public Percentage(int percents) : this()
+        {
+            Value = percents;
+        }
 
         public override string ToString()
         {
-            return $"{Value*100}%";
+            return $"{Value}%";
         }
 
         public override int GetHashCode()

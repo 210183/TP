@@ -21,7 +21,12 @@ namespace Shop.Tests
             DateTime testTime = DateTime.Now;
             
 
-            Invoice invoice = new Invoice(new Client(clientFirstName, clientLastName), new Product(productName));
+            Invoice invoice = new Invoice(
+                new Client(clientFirstName,clientLastName), 
+                new Product(productName),
+                1,
+                (decimal)123.123,
+                new Percentage(21));
 
             Assert.IsTrue(testTime <= invoice.PurchaseTime);
             Assert.IsTrue(testTime.AddSeconds(1) > invoice.PurchaseTime);

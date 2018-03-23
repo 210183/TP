@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Shop;
 using Shop.DataHandling;
 using Shop.Logging;
+using Shop.Tests;
 
 namespace ConsoleShop
 {
@@ -17,17 +18,19 @@ namespace ConsoleShop
         {
             var logger = new ConsoleLogger();
             var context = new ShopContext();
+            var inserter = new RandomDataInserter();
+            inserter.InitializeContextWithData(context);
             var repo = new ShopRepository(context, logger);
             var service = new ShopService(repo, logger);
 
-            #region loop vars
+#region loop vars
             var shouldMainLoop = true;
             int chosenOption = 1;
             var currentClient = new Client("Steve", "Harris");
             var chosenProduct = new Product("Squire");
             int chosenClientNumber = 1;
             int chosenProductNumber = 1;
-            #endregion
+#endregion
             while (shouldMainLoop)
             {
                 Console.Clear();
@@ -85,7 +88,7 @@ namespace ConsoleShop
             
             Console.ReadLine();
 
-            #region local methods
+#region local methods
             int ReadKey()
             {
                var chosen = Console.ReadKey();
@@ -155,7 +158,7 @@ namespace ConsoleShop
                                 if (price >= 0)
                                 {
                                     var newProduct = new Product(productName);
-                                    var newProductState = new ProductState(newProduct, amount, price, new Percentage(0.23));
+                                    var newProductState = new ProductState(newProduct, amount, price, new Percentage(23));
                                     context.Products.Add(newProduct.Id, newProduct);
                                     context.ProductStates.Add(newProductState);
                                 }
@@ -222,7 +225,8 @@ namespace ConsoleShop
                     }
                 }
             }
-            #endregion
-        }
+#endregion
+       
+    }
     }
 }
