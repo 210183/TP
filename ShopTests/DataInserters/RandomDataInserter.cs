@@ -30,7 +30,7 @@ namespace Shop.Tests
         }
 
         /// <summary>
-        /// Inserts randomly generated 1000 clients, 100 product(max: amount = 200, price =20000)
+        /// Inserts randomly generated, by default or specified, 1000 clients, 100 product(max: amount = 200, price =20000)
         /// and creates 2000 invoices between them
         /// </summary>
         /// <param name="context"></param>

@@ -57,7 +57,7 @@ namespace Shop
         }
         public Invoice GetInvoice(string id)
         {
-            var invoice = context.Invoices.Where(i => i.Id == id).FirstOrDefault();
+            var invoice = context.Invoices.FirstOrDefault(i => i.Id == id);
             if ( invoice is null)
             {
                 throw new NotFoundException("Invoice not found");
@@ -69,7 +69,7 @@ namespace Shop
         }
         public ProductState GetProductState(Product product) 
         {
-            var productState = context.ProductStates.Where(p => p.Product.Id == product.Id).FirstOrDefault();
+            var productState = context.ProductStates.FirstOrDefault(p => p.Product.Id == product.Id);
             if (productState is null)
             {
                 throw new NotFoundException("ProductState not found");
@@ -123,7 +123,7 @@ namespace Shop
         }
         public void Add(ProductState productState)
         {
-            if (context.ProductStates.Where(p => p.Product.Id == productState.Product.Id).FirstOrDefault() == null) // if no ProductState describing the same product
+            if (context.ProductStates.FirstOrDefault(p => p.Product.Id == productState.Product.Id) == null) // if no ProductState describing the same product
             {
                 context.ProductStates.Add(productState);
                 context.ReportData.LastChangeTime = DateTime.Now;

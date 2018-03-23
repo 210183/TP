@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 using Shop;
 using Shop.DataHandling;
 using Shop.Logging;
-using Shop.Tests;
 
 namespace ConsoleShop
 {
     class Program
     {
-        private static readonly string SuperSecretPassword = "haslomaslo";
+        private static readonly string SuperSecretPassword = "";
 
         static void Main(string[] args)
         {
             var logger = new ConsoleLogger();
             var context = new ShopContext();
-            var inserter = new RandomDataInserter();
-            inserter.InitializeContextWithData(context);
             var repo = new ShopRepository(context, logger);
             var service = new ShopService(repo, logger);
 
