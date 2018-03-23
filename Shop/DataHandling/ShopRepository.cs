@@ -190,10 +190,12 @@ namespace Shop
             if(clientData.IsFirstNameChanged == true)
             {
                 client.FirstName = clientData.FirstName;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             if (clientData.IsLastNameChanged == true)
             {
                 client.LastName = clientData.LastName;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
 
         }
@@ -203,6 +205,7 @@ namespace Shop
             if (productData.IsNameChanged == true)
             {
                 product.Name = productData.Name;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
         }
 
@@ -211,14 +214,17 @@ namespace Shop
             if (productStateData.IsAmountChanged == true)
             {
                 productState.Amount = productStateData.Amount;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             if (productStateData.IsPriceNettoChanged == true)
             {
                 productState.PriceNetto = productStateData.PriceNetto;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             if (productStateData.IsTaxRateChanged == true)
             {
                 productState.TaxRate = productStateData.TaxRate;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
         }
         public void Update(Invoice invoice, InvoiceData invoiceData)
@@ -226,18 +232,22 @@ namespace Shop
             if (invoiceData.IsPurchaseTimeChanged == true)
             {
                 invoice.PurchaseTime = invoiceData.PurchaseTime;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             if (invoiceData.IsAmountChanged == true)
             {
                 invoice.Amount = invoiceData.Amount;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             if (invoiceData.IsTaxRateChanged == true)
             {
                 invoice.TaxRate = invoiceData.TaxRate;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
             if (invoiceData.IsPriceChanged == true)
             {
                 invoice.Price = invoiceData.Price;
+                context.ReportData.LastChangeTime = DateTime.Now;
             }
         }
         #endregion
