@@ -14,18 +14,25 @@ namespace Shop
         public DateTime PurchaseTime { get; }
         public Client Client { get; set; }
         public Product Product { get; set; }
+        public int Amount { get; set; }
+        public decimal Price { get; }
+        public Percentage TaxRate { get; }
 
-        public Invoice(Client client, Product product)
+        public Invoice(Client client, Product product, int amount, decimal price, Percentage taxRate)
         {
             id = Guid.NewGuid().ToString();
             PurchaseTime = DateTime.Now;
             Product = product;
             Client = client;
+            Amount = amount;
+            Price = price;
+            TaxRate = taxRate;
         }
 
         public override string ToString()
         {
-            return $"--Date {PurchaseTime.ToString()} \n--Buyer: {Client.ToString()} \n--Product: {Product.ToString()}";
+            return $"--Date {PurchaseTime.ToString()} \n--Buyer: {Client.ToString()} \n--Product: {Product.ToString()}" +
+                    $" \n--Amount: {Amount.ToString()} \n--Netto Price: {Price.ToString()} \n--Tax Rate: {TaxRate.ToString()} ";
         }
     }
 }

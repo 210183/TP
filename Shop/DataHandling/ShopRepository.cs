@@ -183,6 +183,9 @@ namespace Shop
             }
         }
         #endregion
+        #region Update
+        
+        #endregion
 
         public void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
