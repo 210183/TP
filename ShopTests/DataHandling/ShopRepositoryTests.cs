@@ -70,12 +70,11 @@ namespace Shop.Tests
         [TestMethod()]
         public void GetClientTest()
         {
-            string clientName = "Buddy";
-
-            var client = context.Clients.Find(c => c.FirstName == clientName);
+            
+            var client = context.Clients.First(); 
             var newClient = repo.GetClient(client.Id);
 
-            Assert.AreEqual(newClient.FirstName, clientName);
+            Assert.AreEqual(newClient.FirstName, client.FirstName);
         }
 
         [TestMethod()]
