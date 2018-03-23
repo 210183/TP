@@ -208,31 +208,47 @@ namespace Shop.Tests
         }
 
         [TestMethod()]
-        public void UpdateClientTest()
+          public void UpdateClientTest()
         {
-            var clientData = new ClientData { LastName = "Kazakov" };
+            ClientData clientData = new ClientData { LastName = "Kazakov" };
             Assert.IsTrue(clientData.LastName != client.LastName);
             repo.Update(client, clientData);
             Assert.IsTrue(clientData.LastName == client.LastName);
+            Assert.IsFalse(clientData.IsFirstNameChanged);
 
         }
 
         [TestMethod()]
         public void UpdateProductTest()
         {
-            Assert.Fail();
+            var productData = new ProductData { Name = "Banana" };
+            Assert.IsTrue(productData.Name != product.Name);
+            repo.Update(product, productData);
+            Assert.IsTrue(productData.Name == product.Name);
         }
 
         [TestMethod()]
         public void UpdateProductStateTest()
         {
-            Assert.Fail();
+            var productStateData = new ProductStateData { Amount = 15, PriceNetto = 10 };
+            Assert.IsTrue(productStateData.Amount != productState.Amount);
+            Assert.IsTrue(productStateData.PriceNetto != productState.PriceNetto);
+           repo.Update(productState, productStateData);
+            Assert.IsTrue(productStateData.Amount == productState.Amount);
+            Assert.IsTrue(productStateData.PriceNetto == productState.PriceNetto);
+            Assert.IsFalse(productStateData.IsTaxRateChanged);
         }
 
         [TestMethod()]
         public void UpdateInvoiceTest()
         {
-            Assert.Fail();
+            var invoiceData = new InvoiceData { Amount = 15, TaxRate = new Percentage(10) };
+            Assert.IsTrue(invoiceData.Amount != invoice.Amount);
+            Assert.IsTrue(invoiceData.TaxRate!= invoice.TaxRate);
+            repo.Update(invoice, invoiceData);
+            Assert.IsTrue(invoiceData.Amount == invoice.Amount);
+            Assert.IsTrue(invoiceData.TaxRate == invoice.TaxRate);
+            Assert.IsFalse(invoiceData.IsPriceChanged);
         }
         /*
 [TestMethod()]

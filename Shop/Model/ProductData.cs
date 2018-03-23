@@ -8,7 +8,8 @@ namespace Shop.Model
 {
     public class ProductData
     {
-        public string Name { get => Name; set { Name = value; IsNameChanged = true; } }
+        private string name;
+        public string Name { get => name; set { name = value; IsNameChanged = true; } }
         public bool IsNameChanged { get; set; } = false;
     }
 }

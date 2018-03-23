@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 namespace Shop.Model
 {
     public class ProductStateData
-    {
-        public int Amount { get => Amount; set { Amount = value; IsAmountChanged = true; } }
+    {       
+        private int amount;
+        private decimal priceNetto;
+        private Percentage taxRate;
+
+        public int Amount { get => amount; set { amount = value; IsAmountChanged = true; } }
         public bool IsAmountChanged { get; set; } = false;
-        public decimal PriceNetto { get => PriceNetto; set { PriceNetto = value; IsPriceNettoChanged = true; } }
+        public decimal PriceNetto { get => priceNetto; set { priceNetto = value; IsPriceNettoChanged = true; } }
         public bool IsPriceNettoChanged { get; set; } = false;
-        public Percentage TaxRate { get => TaxRate; set { TaxRate = value; IsTaxRateChanged = true; } }
+        public Percentage TaxRate { get => taxRate; set { taxRate = value; IsTaxRateChanged = true; } }
         public bool IsTaxRateChanged { get; set; } = false;
     }
 }

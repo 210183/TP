@@ -8,9 +8,12 @@ namespace Shop.Model
 {
     public class ClientData
     {
-        public string FirstName { get => FirstName; set { FirstName = value; IsFirstNameChanged = true; } }
+        private string lastName;
+        private string firstName;
+
+        public string FirstName { get => firstName; set { firstName = value; IsFirstNameChanged = true; } }
         public bool IsFirstNameChanged { get; set; } = false;
-        public string LastName { get => LastName; set { LastName = value; IsLastNameChanged = true; } }
+        public string LastName { get => lastName; set { lastName = value; IsLastNameChanged = true; } }
         public bool IsLastNameChanged { get; set; } = false;
     }
 }
