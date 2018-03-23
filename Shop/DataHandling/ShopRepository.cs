@@ -1,5 +1,6 @@
 ﻿using Shop.DataHandling;
 using Shop.Logging;
+using Shop.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -184,7 +185,61 @@ namespace Shop
         }
         #endregion
         #region Update
-        
+        public void Update(Client client, ClientData clientData)
+        {
+            if(clientData.IsFirstNameChanged == true)
+            {
+                client.FirstName = clientData.FirstName;
+            }
+            if (clientData.IsLastNameChanged == true)
+            {
+                client.LastName = clientData.LastName;
+            }
+
+        }
+
+        public void Update(Product product, ProductData productData)
+        {
+            if (productData.IsNameChanged == true)
+            {
+                product.Name = productData.Name;
+            }
+        }
+
+        public void Update(ProductState productState, ProductStateData productStateData)
+        {
+            if (productStateData.IsAmountChanged == true)
+            {
+                productState.Amount = productStateData.Amount;
+            }
+            if (productStateData.IsPriceNettoChanged == true)
+            {
+                productState.PriceNetto = productStateData.PriceNetto;
+            }
+            if (productStateData.IsTaxRateChanged == true)
+            {
+                productState.TaxRate = productStateData.TaxRate;
+            }
+        }
+        public void Update(Invoice invoice, InvoiceData invoiceData)
+        {
+            if (invoiceData.IsPurchaseTimeChanged == true)
+            {
+                invoice.PurchaseTime = invoiceData.PurchaseTime;
+            }
+            if (invoiceData.IsAmountChanged == true)
+            {
+                invoice.Amount = invoiceData.Amount;
+            }
+            if (invoiceData.IsTaxRateChanged == true)
+            {
+                invoice.TaxRate = invoiceData.TaxRate;
+            }
+            if (invoiceData.IsPriceChanged == true)
+            {
+                invoice.Price = invoiceData.Price;
+            }
+        }
         #endregion
 
         public void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
