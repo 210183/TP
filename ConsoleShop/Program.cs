@@ -155,7 +155,7 @@ namespace ConsoleShop
                                 if (price >= 0)
                                 {
                                     var newProduct = new Product(productName);
-                                    var newProductState = new ProductState(newProduct, amount, price, new Percentage(0.23));
+                                    var newProductState = new ProductState(newProduct, amount, price, new Percentage(23));
                                     context.Products.Add(newProduct.Id, newProduct);
                                     context.ProductStates.Add(newProductState);
                                 }

@@ -32,7 +32,7 @@ namespace Shop.Tests
             ConstantDataInserter dataInserter = new ConstantDataInserter();
             dataInserter.InitializeContextWithData(context);
             repo = new ShopRepository(context, logger);
-            taxRate = new Percentage(0.2);
+            taxRate = new Percentage(20);
 
             client = new Client("John", "Doe");
             product = new Product("Chicken");
@@ -185,7 +185,7 @@ namespace Shop.Tests
         [ExpectedException(typeof(NotFoundException))]
         public void DeleteProductStateNotInRepo_Test()
         {
-            var newProductState = new ProductState(product, 31, 141, new Percentage(0.21));
+            var newProductState = new ProductState(product, 31, 141, new Percentage(21));
             repo.Delete(newProductState);
         }
 

@@ -12,9 +12,18 @@ namespace Shop.Tests
     {
         private static readonly int clientAmount = 1000;
         private static readonly int productAmount = 100;
+        private static readonly int invoicesAmount = 2000;
+
+        private static readonly int maxAmount = 200;
+        private static readonly int maxPrice = 200;
+        private static readonly int maxPercentage = 100;
+        
         public void InitializeContextWithData(ShopContext context)
         {
             var clients = new Client[clientAmount];
+            var products = new Product[productAmount];
+            var productStates = new ProductState[productAmount];
+            var invoices = new Invoice[productAmount];
             var assembly = Assembly.GetExecutingAssembly();
             string[] stringSeparators = new string[] { "\r\n" };
             #region generate clients
@@ -47,35 +56,58 @@ namespace Shop.Tests
                         firstNames[firstRandomizer.Next() % firstNames.Length],
                         lastNames[lastRandomizer.Next() % lastNames.Length]
                         );
-                    context.Clients.Add(clients[i]);
+                    //context.Clients.Add(clients[i]);
                 }
             }
             #endregion
-            #region generate products
-            var products = new Product[productAmount];
-            var productsSourceName = FormatResourceName(assembly, "Resources/products.txt");
-            string productsSequence;
-            using (Stream stream = assembly.GetManifestResourceStream(productsSourceName))
+            #region generate products and their states
             {
-                using (StreamReader reader = new StreamReader(stream))
+                var productsSourceName = FormatResourceName(assembly, "Resources/products.txt");
+                string productsSequence;
+                using (Stream stream = assembly.GetManifestResourceStream(productsSourceName))
                 {
-                    productsSequence = reader.ReadToEnd();
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        productsSequence = reader.ReadToEnd();
+                    }
+                }
+                string[] productNames = productsSequence.Split(stringSeparators, StringSplitOptions.None);
+                Random randomizer = new Random();
+                for (int i = 0; i < productAmount; i++)
+                {
+                    products[i] = new Product(
+                        productNames[randomizer.Next() % productNames.Length] +
+                        productNames[randomizer.Next() % productNames.Length]
+                        );
+                    //context.Products.Add(products[i].Id, products[i]);
+                    productStates[i] = new ProductState(
+                        products[i],
+                        randomizer.Next() % maxAmount,
+                        randomizer.Next() % maxPrice,
+                        new Percentage(randomizer.Next() & maxPercentage)
+                        );
                 }
             }
-            string[] productNames = productsSequence.Split(stringSeparators, StringSplitOptions.None);
-            Random Randomizer = new Random();
-            for (int i = 0; i < productAmount; i++)
+            #endregion
+            #region generate invoices
             {
-                products[i] = new Product(
-                    productNames[Randomizer.Next() % productNames.Length] +
-                    productNames[Randomizer.Next() % productNames.Length]
-                    );
-                context.Products.Add(products[i].Id, products[i]);
+                var randomizer = new Random();
+                for (int i = 0; i < invoicesAmount; i++)
+                {
+                    var currentBuyer = clients[randomizer.Next() % clients.Length];
+                    var currentProduct = products[randomizer.Next() % products.Length];
+                    invoices[i] = new Invoice(
+                        currentBuyer,
+                        currentProduct,
+                        randomizer.Next() % 10,
+                        randomizer.Next() % maxPrice,
+                        new Percentage(randomizer.Next() & maxPercentage)
+                        );
+                }
             }
             #endregion
 
-
-        }
+            }
         private static string FormatResourceName(Assembly assembly, string resourceName)
         {
             return assembly.GetName().Name + "." + resourceName.Replace(" ", "_")
