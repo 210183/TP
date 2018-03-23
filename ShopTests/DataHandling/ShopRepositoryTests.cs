@@ -2,6 +2,7 @@
 using Shop;
 using Shop.DataHandling;
 using Shop.Logging;
+using Shop.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace Shop.Tests
             Invoice newInvoice = repo.GetInvoice(invoice.Id);
 
 
-            Assert.AreEqual(invoice.PurchaseTime, newInvoice.PurchaseTime );
+            Assert.AreEqual(invoice.PurchaseTime, newInvoice.PurchaseTime);
         }
 
         [TestMethod()]
@@ -101,13 +102,13 @@ namespace Shop.Tests
         {
             ProductState productState = context.ProductStates.First();
             ProductState newProductState = repo.GetProductState(productState.Product);
-            Assert.AreEqual(productState.Product, newProductState.Product );
+            Assert.AreEqual(productState.Product, newProductState.Product);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(DuplicateException))]
         public void AddClientTest()
-        {    
+        {
             repo.Add(client);
             Assert.AreEqual(client.FirstName, repo.GetClient(client.Id).FirstName);
             repo.Add(client);
@@ -152,7 +153,7 @@ namespace Shop.Tests
         public void DeleteClientNotInRepo_Test()
         {
             var newClient = new Client("Vladimir", "Vladimirowicz");
-            repo.Delete(newClient); 
+            repo.Delete(newClient);
         }
 
         [TestMethod()]
@@ -205,12 +206,40 @@ namespace Shop.Tests
             var newInvoice = new Invoice(client, product);
             repo.Delete(newInvoice);
         }
-        /*
+
         [TestMethod()]
-        public void CollectionChangedTest()
+        public void UpdateClientTest()
+        {
+            var clientData = new ClientData { LastName = "Kazakov" };
+            Assert.IsTrue(clientData.LastName != client.LastName);
+            repo.Update(client, clientData);
+            Assert.IsTrue(clientData.LastName == client.LastName);
+
+        }
+
+        [TestMethod()]
+        public void UpdateProductTest()
         {
             Assert.Fail();
         }
-        */
+
+        [TestMethod()]
+        public void UpdateProductStateTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void UpdateInvoiceTest()
+        {
+            Assert.Fail();
+        }
+        /*
+[TestMethod()]
+public void CollectionChangedTest()
+{
+   Assert.Fail();
+}
+*/
     }
 }
