@@ -37,10 +37,10 @@ namespace ShopTests.PerformanceTests
             dataInserter.InitializeContextWithData(context);
         }
         [TestMethod]
-        [Timeout(10000)]
-        public void InsertHundredsOfThousandsOfData_ShouldLastMaxTwoSecond_Test()
+        [Timeout(20000)]
+        public void InsertHundredsOfThousandsOfData_ShouldLastMaxTwentySecond_Test()
         {
-            dataInserter = new RandomDataInserter(300000, 400000, 600000);
+            dataInserter = new RandomDataInserter(500000, 400000, 200000);
             dataInserter.InitializeContextWithData(context);
         }
     }

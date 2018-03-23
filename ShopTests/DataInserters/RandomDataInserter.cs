@@ -36,6 +36,10 @@ namespace Shop.Tests
         /// <param name="context"></param>
         public void InitializeContextWithData(ShopContext context)
         {
+            var clients = new Client[clientAmount];
+            var products = new Product[productAmount];
+            var productStates = new ProductState[productAmount];
+            var invoices = new Invoice[invoicesAmount];
             var assembly = Assembly.GetExecutingAssembly();
             string[] stringSeparators = new string[] { "\r\n" };
             #region generate clients
@@ -64,10 +68,11 @@ namespace Shop.Tests
                 Random lastRandomizer = new Random();
                 for (int i = 0; i < clientAmount; i++)
                 {
-                    context.Clients.Add (new Client(
+                    clients[i] = new Client(
                         firstNames[firstRandomizer.Next() % firstNames.Length],
                         lastNames[lastRandomizer.Next() % lastNames.Length]
-                        ));
+                        );
+                    context.Clients.Add(clients[i]);
                 }
             }
             #endregion
@@ -86,38 +91,36 @@ namespace Shop.Tests
                 Random randomizer = new Random();
                 for (int i = 0; i < productAmount; i++)
                 {
-                    var product = new Product(
+                    products[i] = new Product(
                         productNames[randomizer.Next() % productNames.Length] +
                         productNames[randomizer.Next() % productNames.Length]
                         );
-                    context.Products.Add(product.Id, product);
-                    context.ProductStates.Add( new ProductState(
-                        product,
+                    context.Products.Add(products[i].Id, products[i]);
+                    productStates[i] = new ProductState(
+                        products[i],
                         randomizer.Next() % maxAmount,
                         randomizer.Next() % maxPrice,
                         new Percentage(randomizer.Next() & maxPercentage)
-                        ));
+                        );
+                    context.ProductStates.Add(productStates[i]);
                 }
             }
             #endregion
             #region generate invoices
             {
                 var randomizer = new Random();
-                var clients = context.Clients;
-                var products = context.Products;
-                Client currentBuyer;
-                Product currentProduct;
                 for (int i = 0; i < invoicesAmount; i++)
                 {
-                    currentBuyer = clients[randomizer.Next() % clients.Count];
-                    currentProduct = RandomValues(products).Take(1).First();
-                    context.Invoices.Add(new Invoice(
+                    var currentBuyer = clients[randomizer.Next() % clients.Length];
+                    var currentProduct = products[randomizer.Next() % products.Length];
+                    invoices[i] = new Invoice(
                         currentBuyer,
                         currentProduct,
                         randomizer.Next() % 10,
                         randomizer.Next() % maxPrice,
                         new Percentage(randomizer.Next() & maxPercentage)
-                        ));
+                        );
+                    context.Invoices.Add(invoices[i]);
                 }
             }
             #endregion
@@ -128,17 +131,5 @@ namespace Shop.Tests
                                                                .Replace("\\", ".")
                                                                .Replace("/", ".");
         }
-
-        private IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
-        {
-            Random rand = new Random();
-            List<TValue> values = Enumerable.ToList(dict.Values);
-            int size = dict.Count;
-            while (true)
-            {
-                yield return values[rand.Next(size)];
-            }
-        }
     }
-   
 }
