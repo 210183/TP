@@ -1,5 +1,4 @@
-﻿using Shop.DataHandling;
-using Shop.Logging;
+﻿using Shop.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

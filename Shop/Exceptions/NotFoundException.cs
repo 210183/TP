@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.DataHandling
+namespace Shop
 {
     [Serializable]
     public class NotFoundException : Exception
