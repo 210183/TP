@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataHandling\ReportData.cs" />
+    <Compile Include="Logging\FileLogger.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="Exceptions\DuplicateException.cs" />
