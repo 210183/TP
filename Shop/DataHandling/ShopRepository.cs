@@ -181,7 +181,7 @@ namespace Shop
         {
             if(client != null)
             {
-                if (context.Invoices.FirstOrDefault(i => i.Client.Id == client.Id) != null)
+                if (context.Invoices.FirstOrDefault(i => i.Client.Id == client.Id) == null)
                 {
                     if (context.Clients.Contains(client))
                     {
@@ -201,7 +201,7 @@ namespace Shop
         {
             if (product != null)
             {
-                if (context.Invoices.FirstOrDefault(i => i.Product.Id == product.Id) != null)
+                if (context.Invoices.FirstOrDefault(i => i.Product.Id == product.Id) == null)
                 {
                     if (context.Products.ContainsKey(product.Id))
                     {

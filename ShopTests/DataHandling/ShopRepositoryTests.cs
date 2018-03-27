@@ -145,9 +145,10 @@ namespace Shop.Tests
         [ExpectedException(typeof(NotFoundException))]
         public void DeleteClient_ShouldDeleteFromRepo_Test()
         {
-            repo.Add(client);
-            repo.Delete(client);
-            repo.GetClient(client.Id);
+            var newClient = new Client("Cris", "Blackberry");
+            repo.Add(newClient);
+            repo.Delete(newClient);
+            repo.GetClient(newClient.Id);
         }
 
         [TestMethod()]

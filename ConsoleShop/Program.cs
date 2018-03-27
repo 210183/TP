@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shop;
-using Shop.DataHandling;
 using Shop.Logging;
 
 namespace ConsoleShop
 {
     class Program
     {
+
         private static readonly string SuperSecretPassword = "";
 
         static void Main(string[] args)
         {
-            var logger = new ConsoleLogger();
+           // var dir = dire
+            var logger = new FileLogger("FileLogger.txt");
             var context = new ShopContext();
             var repo = new ShopRepository(context, logger);
             var service = new ShopService(repo, logger);

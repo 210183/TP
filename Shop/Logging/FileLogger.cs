@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Logging
 {
-    class FileLogger : ILogger
+    public class FileLogger : ILogger
     {
         private string pathFile = "";
 
@@ -15,7 +15,10 @@ namespace Shop.Logging
         {
             if(! File.Exists(pathToLogFile))
             {
-                File.Create(pathToLogFile);
+                using (var loggerFile = File.Create(pathToLogFile))
+                {
+                    //Do nothing
+                }               
             }
             pathFile =  pathToLogFile;
             using (StreamWriter writer = new StreamWriter(pathFile))
@@ -25,7 +28,7 @@ namespace Shop.Logging
         }
         public void Log(string message, LogLevel logLevel = LogLevel.Normal)
         {
-            using (StreamWriter writer = new StreamWriter(pathFile))
+            using (StreamWriter writer = new StreamWriter(pathFile, true))
             {
                 writer.WriteLine($"Time: {DateTime.Now}: {message}");
             }

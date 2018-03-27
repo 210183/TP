@@ -44,26 +44,49 @@ namespace Shop
         #region Delete
         public void Delete(Client client)
         {
-            repository.Delete(client);
+            try
+            {
+                repository.Delete(client);
+            }
+
+            catch
+            {
+                throw;
+            }
+           
         }
         public void Delete(Product product)
         {
-            repository.Delete(repository.GetProductState(product));
-            repository.Delete(product);
+            try
+            {
+                repository.Delete(product);
+                repository.Delete(repository.GetProductState(product));
+            }
+            catch
+            {
+                throw;
+            }
         }
         public void Delete(Invoice invoice)
         {
-            repository.Delete(invoice);
+            try
+            {
+                repository.Delete(invoice);
+            }
+            catch
+            {
+                throw;
+            }
         }
         #endregion
 
         public List<Product> FindProductsWithPriceBetween(decimal lowerBound, decimal upperBound)
         {
             var productStates = repository.GetAllProductStates().Where(p =>
-            p.PriceNetto >= lowerBound && p.PriceNetto <= upperBound);
+                                p.PriceNetto >= lowerBound && p.PriceNetto <= upperBound);
             var products = new List<Product>();
             foreach(var p in productStates)
-            {
+            {                
                 products.Add(p.Product);
             }
             return products;
@@ -79,11 +102,15 @@ namespace Shop
                     {
                         //update state
                         var productState = repository.GetProductState(product);
-                        if(productState.Amount >= amountToSell)
+                        if (productState.Amount >= amountToSell)
                         {
                             productState.Amount -= amountToSell;
                             var invoice = new Invoice(client, product, amountToSell, productState.PriceNetto, productState.TaxRate);
-                            repository.Add(invoice);
+                            try
+                            {
+                                repository.Add(invoice);
+                            }
+                            catch (ArgumentNullException) { throw; }
                             logger.Log($"New purchase has been made with invoice: {invoice.ToString()}");
                         }
                         else
@@ -91,7 +118,7 @@ namespace Shop
                             throw new NotEnoughProductException("Not enough product in stock.");
                         }
                     }
-                    catch(NotFoundException)
+                    catch (NotFoundException)
                     {
                         logger.Log($"Couldn't find product state for {product.Id}, {product.Name}. Stopped selling procedure.", LogLevel.Critical);
                     }

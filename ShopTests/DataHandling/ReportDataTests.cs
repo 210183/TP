@@ -37,7 +37,7 @@ namespace Shop.Tests
             reportData.LastChangeTime = reportData.LastChangeTime.AddMinutes(2);
             Assert.IsTrue(reportData.IsReportOutdated());
 
-            reportData.LastChangeTime = reportData.LastChangeTime.AddMinutes(-2);
+            reportData.LastChangeTime = reportData.LastChangeTime.AddMinutes(-3);
             reportData.UpdateReportDate();
             Assert.IsFalse(reportData.IsReportOutdated());
 
