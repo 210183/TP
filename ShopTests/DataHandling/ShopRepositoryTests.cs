@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop;
-using Shop.DataHandling;
 using Shop.Logging;
 using Shop.Model;
 using System;
@@ -52,6 +51,7 @@ namespace Shop.Tests
         public void GetAllProductsTest()
         {
             Assert.AreEqual(context.Products.Count, repo.GetAllProducts().Count);
+            
         }
 
         [TestMethod()]

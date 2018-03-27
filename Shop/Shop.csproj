@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\DeleteReferencesException.cs" />
     <Compile Include="DataHandling\ReportData.cs" />
     <Compile Include="Logging\FileLogger.cs" />
     <Compile Include="Logging\LogLevel.cs" />

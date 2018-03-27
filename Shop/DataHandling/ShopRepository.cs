@@ -1,4 +1,4 @@
-﻿using Shop.DataHandling;
+﻿using Shop.Exceptions;
 using Shop.Logging;
 using Shop.Model;
 using System;
@@ -94,170 +94,270 @@ namespace Shop
         #region Add
         public void Add(Client client)
         {
-            if (context.Clients.Find(c => c.Id == client.Id) == null) // if no Client with given id
+            if (client != null)
             {
-                context.Clients.Add(client);
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (context.Clients.Find(c => c.Id == client.Id) == null) // if no Client with given id
+                {
+                    context.Clients.Add(client);
+                    context.ReportData.LastChangeTime = DateTime.Now;
+                }
+                else
+                {
+                    throw new DuplicateException("Cannot add client with identical id.");
+                }
             }
-            else
-            {
-                throw new DuplicateException("Cannot add client with identical id.");
-            }
+            else new ArgumentNullException("Client can not be null");
         }
         public void Add(Product product)
         {
-            if (!context.Products.ContainsKey(product.Id)) // if no Product with given id
+            if (product != null)
             {
-                context.Products.Add(product.Id, product);
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (!context.Products.ContainsKey(product.Id)) // if no Product with given id
+                {
+                    context.Products.Add(product.Id, product);
+                    context.ReportData.LastChangeTime = DateTime.Now;
+                }
+                else
+                {
+                    throw new DuplicateException("Cannot add product with identical id.");
+                }
             }
-            else
-            {
-                throw new DuplicateException("Cannot add product with identical id.");
-            }
+            else new ArgumentNullException("Product can not be null");
+            
         }
         public void Add(Invoice invoice)
         {
-            var isClientUnknown = ! context.Clients.Contains(invoice.Client);
-            if (isClientUnknown)
+            if (invoice != null)
             {
-                context.Clients.Add(invoice.Client);
+                if (invoice.Client != null)
+                {
+                    if (invoice.Product != null)
+                    {
+                        var isClientUnknown = !context.Clients.Contains(invoice.Client);
+                        if (isClientUnknown)
+                        {
+                            try
+                            {
+                                context.Clients.Add(invoice.Client);
+                            }
+                            catch { throw; }
+                        }
+
+                        context.Invoices.Add(invoice);
+                        context.ReportData.LastChangeTime = DateTime.Now;
+
+                    }
+                    else throw new ArgumentNullException("Product can not be null");
+                }
+                else throw new ArgumentNullException("Client can not be null");
             }
-            {
-                context.Invoices.Add(invoice);
-                context.ReportData.LastChangeTime = DateTime.Now;
-            }
+            else throw new ArgumentNullException("Invoice can not be null");
         }
         public void Add(ProductState productState)
         {
-            if (context.ProductStates.FirstOrDefault(p => p.Product.Id == productState.Product.Id) == null) // if no ProductState describing the same product
+            if (productState != null)
             {
-                context.ProductStates.Add(productState);
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (productState.Product != null)
+                {
+                    if (context.ProductStates.FirstOrDefault(p => p.Product.Id == productState.Product.Id) == null) // if no ProductState describing the same product
+                    {
+                        context.ProductStates.Add(productState);
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        throw new DuplicateException("Cannot add productState describing the same product.");
+                    }
+                }
+                else throw new ArgumentNullException("Can not add ProductState without Product");
             }
-            else
-            {
-                throw new DuplicateException("Cannot add productState describing the same product.");
-            }
+            else throw new ArgumentNullException("Product can not be null");
         }
+    
         #endregion
 
         #region Delete
         public void Delete(Client client)
         {
-            if (context.Clients.Contains(client) ) 
+            if(client != null)
             {
-                context.Clients.Remove(client);
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (context.Invoices.FirstOrDefault(i => i.Client.Id == client.Id) != null)
+                {
+                    if (context.Clients.Contains(client))
+                    {
+                        context.Clients.Remove(client);
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        throw new NotFoundException("Client not found.");
+                    }
+                }
+                else throw new DeleteReferencesException("Can not delete Client because of references from Invoice(s)");                   
             }
-            else
-            {
-                throw new NotFoundException("Client not found.");
-            }
+            else throw new ArgumentNullException("Client can not be null");
         }
         public void Delete(Product product)
         {
-            if (context.Products.ContainsKey(product.Id)) 
+            if (product != null)
             {
-                context.Products.Remove(product.Id);
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (context.Invoices.FirstOrDefault(i => i.Product.Id == product.Id) != null)
+                {
+                    if (context.Products.ContainsKey(product.Id))
+                    {
+                        context.Products.Remove(product.Id);
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        throw new NotFoundException("Product not found.");
+                    }
+                }
+                else throw new DeleteReferencesException("Can not delete Product because of references from Invoice(s)");
             }
-            else
-            {
-                throw new NotFoundException("Product not found.");
-            }
+            else throw new ArgumentNullException("Product can not be null");
+            
         }
         public void Delete(Invoice invoice)
         {
-            if (context.Invoices.Contains(invoice))
+            if (invoice != null)
             {
-                context.Invoices.Remove(invoice);
-                context.ReportData.LastChangeTime = DateTime.Now;
+                    if (context.Invoices.Contains(invoice))
+                    {
+                        context.Invoices.Remove(invoice);
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        throw new NotFoundException("Invoice not found");
+                    }
+               
             }
-            else
-            {
-                throw new NotFoundException("Invoice not found");
-            }
+            else throw new ArgumentNullException("Invoice can not be null");
+            
         }
         public void Delete(ProductState productState)
         {
-            if ( context.ProductStates.Contains(productState) ) 
+            if (productState.Product != null)
             {
-                context.ProductStates.Remove(productState);
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (context.ProductStates.Contains(productState))
+                {
+                    context.ProductStates.Remove(productState);
+                    context.ReportData.LastChangeTime = DateTime.Now;
+                    
+                }
+                else
+                {
+                    throw new NotFoundException("Product State not found");
+                }
             }
-            else
-            {
-                throw new NotFoundException("Product State not found");
-            }
+            else throw new DeleteReferencesException("Can not delete ProductData because of the reference to some Product");
+
         }
         #endregion
 
         #region Update
         public void Update(Client client, ClientData clientData)
         {
-            if(clientData.IsFirstNameChanged == true)
+            if (client != null )
             {
-                client.FirstName = clientData.FirstName;
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (clientData != null)
+                {
+                    if (clientData.IsFirstNameChanged == true)
+                    {
+                        client.FirstName = clientData.FirstName;
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                    if (clientData.IsLastNameChanged == true)
+                    {
+                        client.LastName = clientData.LastName;
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                }
+                else throw new ArgumentNullException("ClientData can not be null");
             }
-            if (clientData.IsLastNameChanged == true)
-            {
-                client.LastName = clientData.LastName;
-                context.ReportData.LastChangeTime = DateTime.Now;
-            }
-
+            else throw new ArgumentNullException("Client can not be null");
         }
-
         public void Update(Product product, ProductData productData)
         {
-            if (productData.IsNameChanged == true)
+            if (product != null)
             {
-                product.Name = productData.Name;
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (productData != null)
+                {
+                    if (productData.IsNameChanged == true)
+                    {
+                        product.Name = productData.Name;
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                }
+                else throw new ArgumentNullException("ProductData can not be null");
             }
+            else throw new ArgumentNullException("Product can not be null");
         }
-
         public void Update(ProductState productState, ProductStateData productStateData)
         {
-            if (productStateData.IsAmountChanged == true)
+            if (productState != null)
             {
-                productState.Amount = productStateData.Amount;
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (productStateData != null)
+                {
+                    if (productStateData.IsAmountChanged == true)
+                    {
+                        productState.Amount = productStateData.Amount;
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                    if (productStateData.IsPriceNettoChanged == true)
+                    {
+                        productState.PriceNetto = productStateData.PriceNetto;
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                    if (productStateData.IsTaxRateChanged == true)
+                    {
+                        productState.TaxRate = productStateData.TaxRate;
+                        context.ReportData.LastChangeTime = DateTime.Now;
+                    }
+                }
+                else throw new ArgumentNullException("ProductStateData can not be null");
             }
-            if (productStateData.IsPriceNettoChanged == true)
-            {
-                productState.PriceNetto = productStateData.PriceNetto;
-                context.ReportData.LastChangeTime = DateTime.Now;
-            }
-            if (productStateData.IsTaxRateChanged == true)
-            {
-                productState.TaxRate = productStateData.TaxRate;
-                context.ReportData.LastChangeTime = DateTime.Now;
-            }
+            else throw new ArgumentNullException("ProductState can not be null");
         }
         public void Update(Invoice invoice, InvoiceData invoiceData)
         {
-            if (invoiceData.IsPurchaseTimeChanged == true)
+            if (invoice != null)
             {
-                invoice.PurchaseTime = invoiceData.PurchaseTime;
-                context.ReportData.LastChangeTime = DateTime.Now;
+                if (invoice.Client != null)
+                {
+                    if (invoice.Product != null)
+                    {
+                        if (invoiceData != null)
+                        {
+                            if (invoiceData.IsPurchaseTimeChanged == true)
+                            {
+                                invoice.PurchaseTime = invoiceData.PurchaseTime;
+                                context.ReportData.LastChangeTime = DateTime.Now;
+                            }
+                            if (invoiceData.IsAmountChanged == true)
+                            {
+                                invoice.Amount = invoiceData.Amount;
+                                context.ReportData.LastChangeTime = DateTime.Now;
+                            }
+                            if (invoiceData.IsTaxRateChanged == true)
+                            {
+                                invoice.TaxRate = invoiceData.TaxRate;
+                                context.ReportData.LastChangeTime = DateTime.Now;
+                            }
+                            if (invoiceData.IsPriceChanged == true)
+                            {
+                                invoice.Price = invoiceData.Price;
+                                context.ReportData.LastChangeTime = DateTime.Now;
+                            }
+                        }
+                        else throw new ArgumentNullException("InvoiceData can not be null");
+                    }
+                    else throw new ArgumentNullException("Product can not be null");
+                }
+                else throw new ArgumentNullException("Client can not be null");
             }
-            if (invoiceData.IsAmountChanged == true)
-            {
-                invoice.Amount = invoiceData.Amount;
-                context.ReportData.LastChangeTime = DateTime.Now;
-            }
-            if (invoiceData.IsTaxRateChanged == true)
-            {
-                invoice.TaxRate = invoiceData.TaxRate;
-                context.ReportData.LastChangeTime = DateTime.Now;
-            }
-            if (invoiceData.IsPriceChanged == true)
-            {
-                invoice.Price = invoiceData.Price;
-                context.ReportData.LastChangeTime = DateTime.Now;
-            }
+            else throw new ArgumentNullException("Invoice can not be null");
         }
         #endregion
 
